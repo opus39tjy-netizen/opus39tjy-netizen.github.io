@@ -9,6 +9,10 @@ npm-debug.log*
 # environment
 .env
 .env.production
+# secrets — never commit
+token.txt
+*.token
+secrets/
 # macOS / Windows
 .DS_Store
 Thumbs.db

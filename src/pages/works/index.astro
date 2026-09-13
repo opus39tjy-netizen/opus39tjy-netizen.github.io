@@ -20,11 +20,7 @@ const works = await getWorks();
     />
 
     {
-      works.length === 0 ? (
-        <p class="text-ink-mute">
-          还没有作品。在 <code>src/content/works/</code> 下新建 Markdown 文件即可。
-        </p>
-      ) : (
+      works.length === 0 ? null : (
         <ul class="grid grid-cols-1 gap-[clamp(1.25rem,3vw,2rem)] sm:grid-cols-2">
           {works.map((work, i) => (
             <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>

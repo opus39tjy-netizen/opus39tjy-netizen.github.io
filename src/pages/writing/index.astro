@@ -20,11 +20,7 @@ const posts = await getWriting();
     />
 
     {
-      posts.length === 0 ? (
-        <p class="text-ink-mute">
-          还没有文章。在 <code>src/content/writing/</code> 下新建 Markdown 文件即可。
-        </p>
-      ) : (
+      posts.length === 0 ? null : (
         <ul class="border-t border-line">
           {posts.map((post, i) => (
             <li class="reveal border-b border-line" style={`--reveal-delay:${i * 70}ms`}>
