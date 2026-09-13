@@ -1,5 +1,5 @@
 ---
-title: 《White Noise》原曲不使用
+title: White Noise 原曲不使用
 description: 伟大的创作往往起始于一次低劣的模仿，大概。
 date: 2026-09-13T15:34:00.000Z
 category: 创作
