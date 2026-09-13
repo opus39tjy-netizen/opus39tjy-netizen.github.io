@@ -47,6 +47,7 @@ const pathname = Astro.url.pathname;
         <button
           type="button"
           data-scroll-toggle
+          onclick="window.__scrollToggle && window.__scrollToggle()"
           class="fixed inset-x-0 bottom-[calc(4.5rem_+_env(safe-area-inset-bottom))] z-50 mx-auto grid h-12 w-12 touch-manipulation place-items-center rounded-full border border-line bg-white/85 text-ink-mute shadow-soft transition-all duration-300 ease-gentle active:scale-95 hover:text-ink sm:bottom-7"
           aria-label="向下滚动查看最近内容"
         >
@@ -142,25 +143,9 @@ const pathname = Astro.url.pathname;
         updateScrollToggle();
       }
 
-      document.addEventListener('click', (event) => {
-        const target = event.target as Element | null;
-        const button = target?.closest('[data-scroll-toggle]');
-        if (!button) return;
-        event.preventDefault();
+      (window as any).__scrollToggle = function () {
         scrollToSection(isScrolledDown() ? 'page-top' : 'recent');
-      });
-
-      document.addEventListener(
-        'touchend',
-        (event) => {
-          const target = event.target as Element | null;
-          const button = target?.closest('[data-scroll-toggle]');
-          if (!button) return;
-          event.preventDefault();
-          scrollToSection(isScrolledDown() ? 'page-top' : 'recent');
-        },
-        { passive: false }
-      );
+      };
 
       window.addEventListener('scroll', updateScrollToggle, { passive: true });
       window.addEventListener('resize', updateScrollToggle);
