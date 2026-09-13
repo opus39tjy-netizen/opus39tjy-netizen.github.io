@@ -8,41 +8,30 @@ const recent = await getRecent(4);
 
 <BaseLayout>
   <section
-    class="mx-auto flex min-h-[clamp(30rem,78vh,46rem)] w-full max-w-[66rem] flex-col justify-center px-[clamp(1.25rem,5vw,3.5rem)] py-[clamp(4rem,12vw,8rem)]"
+    class="mx-auto w-full max-w-[66rem] px-[clamp(1.25rem,5vw,3.5rem)] pb-[clamp(2rem,5vw,3rem)] pt-[clamp(4rem,10vw,7rem)] text-center"
   >
-    <div class="max-w-[44rem]">
-      <h1
-        class="reveal text-[clamp(2.75rem,1.6rem_+_8vw,5.75rem)] font-medium leading-[1.02] tracking-[-0.03em]"
-      >
-        {site.heading}
-      </h1>
-      {
-        site.tagline && (
-          <p
-            class="reveal mt-5 text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute"
-            style="--reveal-delay:120ms"
-          >
-            {site.tagline}
-          </p>
-        )
-      }
-    </div>
-
-    <span
-      class="reveal mt-auto inline-flex items-center gap-[0.7rem] pt-[clamp(3rem,9vw,6rem)] text-ink-mute"
-      style="--reveal-delay:320ms"
-      aria-hidden="true"
+    <h1
+      class="reveal text-[clamp(1.9rem,1.2rem_+_3vw,3rem)] font-medium leading-[1.2] tracking-[-0.02em]"
     >
-      <span class="hero-cue-line h-px w-10 bg-line-strong"></span>
-      <span class="text-[0.72rem] tracking-[0.32em]">向下</span>
-    </span>
+      {site.heading}
+    </h1>
+    {
+      site.tagline && (
+        <p
+          class="reveal mt-4 text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute"
+          style="--reveal-delay:120ms"
+        >
+          {site.tagline}
+        </p>
+      )
+    }
   </section>
 
   <section
-    class="mx-auto w-full max-w-[66rem] px-[clamp(1.25rem,5vw,3.5rem)] pb-[clamp(4.5rem,11vw,9.5rem)] pt-[clamp(2.5rem,6vw,4rem)]"
+    class="mx-auto w-full max-w-[56rem] px-[clamp(1.25rem,5vw,3.5rem)] pb-[clamp(4rem,10vw,8rem)] pt-[clamp(1rem,3vw,2rem)]"
   >
     <div
-      class="reveal mb-[clamp(1.75rem,4vw,3rem)] flex items-baseline justify-between gap-6"
+      class="reveal mb-[clamp(1.25rem,3vw,2rem)] flex items-baseline justify-between gap-6"
     >
       <p class="text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute">最近</p>
       <a
@@ -74,22 +63,3 @@ const recent = await getRecent(4);
     }
   </section>
 </BaseLayout>
-
-<style>
-  .hero-cue-line {
-    transform-origin: left center;
-    animation: cue 4.5s var(--ease) infinite;
-  }
-
-  @keyframes cue {
-    0%,
-    100% {
-      transform: scaleX(0.55);
-      opacity: 0.5;
-    }
-    50% {
-      transform: scaleX(1);
-      opacity: 1;
-    }
-  }
-</style>
