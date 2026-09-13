@@ -26,6 +26,31 @@ media_libraries:
       max_file_size: 26214400 # 25 MB, keeps the Git repo small
 
 collections:
+  - name: course
+    label: 课程
+    label_singular: 一门课程
+    description: 课程笔记与资料——上传讲义文件（PDF/PPT/图片等）结合文字。
+    folder: src/content/course
+    create: true
+    format: yaml-frontmatter
+    identifier_field: title
+    fields:
+      - { name: title, label: 标题, widget: string }
+      - { name: description, label: 描述, widget: text, required: false }
+      - { name: date, label: 日期, widget: hidden, default: '{{datetime}}' }
+      - { name: category, label: 分类, widget: string, default: 课程 }
+      - { name: order, label: 排序, widget: number, required: false, value_type: int }
+      - { name: cover, label: 封面图, widget: image, required: false }
+      - name: files
+        label: 课程文件（可多选：PDF、PPT、图片等）
+        widget: file
+        multiple: true
+        required: false
+        media_folder: /public/files
+        public_folder: /files
+      - { name: tags, label: 标签, widget: list, required: false, default: [] }
+      - { name: body, label: 正文（可插入图片）, widget: markdown }
+
   - name: writing
     label: 文章
     label_singular: 一篇文章
@@ -36,55 +61,11 @@ collections:
     fields:
       - { name: title, label: 标题, widget: string }
       - { name: description, label: 摘要, widget: text, required: false }
-      - {
-          name: date,
-          label: 日期,
-          widget: datetime,
-          date_format: "YYYY-MM-DD",
-          time_format: false,
-        }
+      - { name: date, label: 日期, widget: hidden, default: '{{datetime}}' }
       - { name: category, label: 分类, widget: string, default: 随笔 }
       - { name: tags, label: 标签, widget: list, required: false, default: [] }
       - { name: cover, label: 封面图, widget: image, required: false }
       - { name: url, label: 外部链接, widget: string, required: false }
-      - { name: draft, label: 草稿（不显示）, widget: boolean, default: false }
-      - { name: body, label: 正文, widget: markdown }
-
-  - name: works
-    label: 作品
-    label_singular: 一个作品
-    folder: src/content/works
-    create: true
-    format: yaml-frontmatter
-    identifier_field: title
-    fields:
-      - { name: title, label: 标题, widget: string }
-      - { name: description, label: 摘要, widget: text, required: false }
-      - {
-          name: date,
-          label: 日期,
-          widget: datetime,
-          date_format: "YYYY-MM-DD",
-          time_format: false,
-        }
-      - { name: category, label: 分类, widget: string, default: 项目 }
-      - { name: tags, label: 标签, widget: list, required: false, default: [] }
-      - { name: cover, label: 封面图, widget: image, required: false }
-      - { name: url, label: 外部链接（大视频等）, widget: string, required: false }
-      - name: links
-        label: 外部链接列表
-        widget: list
-        required: false
-        default: []
-        fields:
-          - { name: label, label: 名称, widget: string }
-          - { name: href, label: 链接, widget: string }
-      - name: video
-        label: 视频（小文件，可选）
-        widget: file
-        required: false
-        media_folder: /public/videos
-        public_folder: /videos
       - { name: draft, label: 草稿（不显示）, widget: boolean, default: false }
       - { name: body, label: 正文, widget: markdown }
 
@@ -98,13 +79,7 @@ collections:
     fields:
       - { name: title, label: 标题, widget: string }
       - { name: description, label: 描述, widget: text, required: false }
-      - {
-          name: date,
-          label: 日期,
-          widget: datetime,
-          date_format: "YYYY-MM-DD",
-          time_format: false,
-        }
+      - { name: date, label: 日期, widget: hidden, default: '{{datetime}}' }
       - { name: category, label: 分类, widget: string, default: 创作 }
       - { name: artist, label: 艺人, widget: string, required: false }
       - name: audio
@@ -130,30 +105,6 @@ collections:
         required: false
         media_folder: /public/videos
         public_folder: /videos
-      - { name: draft, label: 草稿（不显示）, widget: boolean, default: false }
-      - { name: body, label: 正文, widget: markdown }
-
-  - name: course
-    label: 课程
-    label_singular: 一门课程
-    folder: src/content/course
-    create: true
-    format: yaml-frontmatter
-    identifier_field: title
-    fields:
-      - { name: title, label: 标题, widget: string }
-      - { name: description, label: 描述, widget: text, required: false }
-      - {
-          name: date,
-          label: 日期,
-          widget: datetime,
-          date_format: "YYYY-MM-DD",
-          time_format: false,
-        }
-      - { name: category, label: 分类, widget: string, default: 课程 }
-      - { name: order, label: 排序, widget: number, required: false, value_type: int }
-      - { name: cover, label: 封面图, widget: image, required: false }
-      - { name: tags, label: 标签, widget: list, required: false, default: [] }
       - { name: draft, label: 草稿（不显示）, widget: boolean, default: false }
       - { name: body, label: 正文, widget: markdown }
 
@@ -199,12 +150,6 @@ collections:
         file: src/content/pages/about.md
         fields:
           - { name: title, label: 标题, widget: string, default: 关于 }
-          - {
-              name: eyebrow,
-              label: 小标签,
-              widget: string,
-              required: false,
-              default: 关于,
-            }
+          - { name: eyebrow, label: 小标签, widget: string, required: false, default: 关于 }
           - { name: description, label: 描述, widget: text, required: false }
           - { name: body, label: 正文, widget: markdown }

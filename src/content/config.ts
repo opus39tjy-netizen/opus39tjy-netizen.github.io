@@ -19,16 +19,11 @@ const links = z
   .array(z.object({ label: z.string(), href: z.string().url() }))
   .default([]);
 
-const video = z.preprocess(emptyToUndefined, z.string().optional());
+const fileList = z.array(z.string()).default([]);
 
 const writing = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/writing' }),
   schema: baseFields,
-});
-
-const works = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/works' }),
-  schema: baseFields.extend({ links, video }),
 });
 
 const music = defineCollection({
@@ -36,14 +31,17 @@ const music = defineCollection({
   schema: baseFields.extend({
     artist: z.preprocess(emptyToUndefined, z.string().optional()),
     audio: z.preprocess(emptyToUndefined, z.string().optional()),
+    video: z.preprocess(emptyToUndefined, z.string().optional()),
     links,
-    video,
   }),
 });
 
 const course = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/course' }),
-  schema: baseFields.extend({ order: z.number().optional() }),
+  schema: baseFields.extend({
+    order: z.number().optional(),
+    files: fileList,
+  }),
 });
 
 const pages = defineCollection({
@@ -55,4 +53,4 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { writing, works, music, course, pages };
+export const collections = { course, writing, music, pages };

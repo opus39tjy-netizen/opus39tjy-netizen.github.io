@@ -14,6 +14,7 @@ export async function getStaticPaths() {
 type Props = { entry: CollectionEntry<'course'> };
 const { entry } = Astro.props as Props;
 const { Content } = await render(entry);
+const files = entry.data.files ?? [];
 ---
 
 <ContentLayout
@@ -25,5 +26,40 @@ const { Content } = await render(entry);
   cover={entry.data.cover}
   comments={true}
 >
+  {
+    files.length > 0 && (
+      <div slot="links" class="reveal mb-10">
+        <ul class="flex flex-col gap-2">
+          {files.map((file) => (
+            <li>
+              <a
+                href={file}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-sm border border-line bg-white/60 px-3 py-2 text-[0.9rem] text-accent-strong transition-all duration-300 ease-gentle hover:-translate-y-0.5 hover:shadow-soft"
+              >
+                <svg
+                  class="h-4 w-4 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 3v12"></path>
+                  <path d="M7 10l5 5 5-5"></path>
+                  <path d="M5 21h14"></path>
+                </svg>
+                {file.split('/').pop()}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
   <Content />
 </ContentLayout>

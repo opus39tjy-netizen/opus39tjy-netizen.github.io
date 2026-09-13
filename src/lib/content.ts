@@ -15,12 +15,6 @@ export async function getWriting() {
   );
 }
 
-export async function getWorks() {
-  return (await getCollection('works', ({ data }) => !data.draft)).sort(
-    byDateDesc
-  );
-}
-
 export async function getMusic() {
   return (await getCollection('music', ({ data }) => !data.draft)).sort(
     byDateDesc
@@ -43,9 +37,8 @@ export interface RecentItem {
 }
 
 export async function getRecent(limit = 4): Promise<RecentItem[]> {
-  const [writing, works, music, course] = await Promise.all([
+  const [writing, music, course] = await Promise.all([
     getWriting(),
-    getWorks(),
     getMusic(),
     getCourse(),
   ]);
@@ -57,14 +50,6 @@ export async function getRecent(limit = 4): Promise<RecentItem[]> {
       category: entry.data.category,
       date: entry.data.date,
       href: `/writing/${entry.id}`,
-      cover: entry.data.cover,
-    })),
-    ...works.map((entry) => ({
-      title: entry.data.title,
-      description: entry.data.description,
-      category: entry.data.category,
-      date: entry.data.date,
-      href: `/works/${entry.id}`,
       cover: entry.data.cover,
     })),
     ...music.map((entry) => ({
