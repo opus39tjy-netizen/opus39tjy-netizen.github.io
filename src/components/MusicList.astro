@@ -30,18 +30,6 @@ const { entries } = Astro.props;
             ) : (
               <MediaPlaceholder label="音乐" />
             )}
-            {entry.data.video && (
-              <span
-                class="pointer-events-none absolute inset-0 grid place-items-center"
-                aria-hidden="true"
-              >
-                <span class="grid h-7 w-7 place-items-center rounded-full bg-white/80 text-accent-strong shadow-soft">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5.14v13.72a.5.5 0 0 0 .76.43l11-6.86a.5.5 0 0 0 0-.86l-11-6.86A.5.5 0 0 0 8 5.14Z" />
-                  </svg>
-                </span>
-              </span>
-            )}
           </div>
           <div class="min-w-0 flex-1">
             <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
