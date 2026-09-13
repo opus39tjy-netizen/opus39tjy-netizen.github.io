@@ -8,4 +8,4 @@ description: ''
 
 该网站由DeepSeek V4.1 Flash完成，耗费token427.6k。
 
-由Sveltia CMS管理。
+通过Sveltia CMS管理。
