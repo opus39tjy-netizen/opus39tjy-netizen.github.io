@@ -1,0 +1,20 @@
+---
+import { getEntry, render } from 'astro:content';
+import ContentLayout from '../layouts/ContentLayout.astro';
+
+const entry = await getEntry('pages', 'about');
+
+if (!entry) {
+  throw new Error('缺少关于页内容：请确认 src/content/pages/about.md 存在');
+}
+
+const { Content } = await render(entry);
+---
+
+<ContentLayout
+  title={entry.data.title}
+  eyebrow={entry.data.eyebrow ?? '关于'}
+  description={entry.data.description}
+>
+  <Content />
+</ContentLayout>

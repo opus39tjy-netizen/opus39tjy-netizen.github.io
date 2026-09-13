@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+import { getRecent, formatDate } from '../lib/content';
+
+const recent = await getRecent(4);
+---
+
+<BaseLayout>
+  <section
+    class="mx-auto flex min-h-[clamp(30rem,78vh,46rem)] w-full max-w-[66rem] flex-col justify-center px-[clamp(1.25rem,5vw,3.5rem)] py-[clamp(4rem,12vw,8rem)]"
+  >
+    <div class="max-w-[44rem]">
+      <p class="reveal text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute">
+        个人空间
+      </p>
+      <h1
+        class="reveal mt-[1.15rem] text-[clamp(2.75rem,1.6rem_+_8vw,5.75rem)] font-medium leading-[1.02] tracking-[-0.03em]"
+        style="--reveal-delay:80ms"
+      >
+        {site.name}
+      </h1>
+      <p
+        class="reveal mt-6 max-w-[26ch] text-[clamp(1.1rem,1rem_+_0.6vw,1.45rem)] leading-[1.75] text-ink-soft"
+        style="--reveal-delay:160ms"
+      >
+        {site.tagline}
+      </p>
+    </div>
+
+    <span
+      class="reveal mt-auto inline-flex items-center gap-[0.7rem] pt-[clamp(3rem,9vw,6rem)] text-ink-mute"
+      style="--reveal-delay:320ms"
+      aria-hidden="true"
+    >
+      <span class="hero-cue-line h-px w-10 bg-line-strong"></span>
+      <span class="text-[0.72rem] tracking-[0.32em]">向下</span>
+    </span>
+  </section>
+
+  <section
+    class="mx-auto w-full max-w-[66rem] px-[clamp(1.25rem,5vw,3.5rem)] pb-[clamp(4.5rem,11vw,9.5rem)] pt-[clamp(2.5rem,6vw,4rem)]"
+  >
+    <div
+      class="reveal mb-[clamp(1.75rem,4vw,3rem)] flex items-baseline justify-between gap-6"
+    >
+      <p class="text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute">最近</p>
+      <a
+        class="text-[0.9rem] text-ink-soft transition-colors duration-300 ease-gentle hover:text-accent-strong"
+        href="/writing">全部文章</a
+      >
+    </div>
+
+    <ul class="reveal border-t border-line">
+      {
+        recent.map((item) => (
+          <li class="border-b border-line">
+            <a
+              href={item.href}
+              class="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 py-[clamp(1.05rem,3vw,1.6rem)] transition-transform duration-500 ease-gentle hover:translate-x-1.5"
+            >
+              <span class="text-[clamp(1.05rem,0.98rem_+_0.5vw,1.3rem)] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
+                {item.title}
+              </span>
+              <span class="whitespace-nowrap text-[0.85rem] tabular-nums text-ink-mute">
+                {item.category} · {formatDate(item.date)}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-cue-line {
+    transform-origin: left center;
+    animation: cue 4.5s var(--ease) infinite;
+  }
+
+  @keyframes cue {
+    0%,
+    100% {
+      transform: scaleX(0.55);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+  }
+</style>

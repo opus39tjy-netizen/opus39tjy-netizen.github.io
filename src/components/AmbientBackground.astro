@@ -1,0 +1,77 @@
+---
+---
+
+<div class="ambient" aria-hidden="true">
+  <span class="ambient__blob ambient__blob--blue"></span>
+  <span class="ambient__blob ambient__blob--violet"></span>
+  <span class="ambient__blob ambient__blob--cyan"></span>
+</div>
+
+<style>
+  .ambient {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .ambient__blob {
+    position: absolute;
+    display: block;
+    width: 46vmax;
+    height: 46vmax;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.3;
+  }
+
+  .ambient__blob--blue {
+    top: -18vmax;
+    left: -10vmax;
+    background: radial-gradient(circle, var(--blue), transparent 68%);
+    animation: drift-a 26s var(--ease) infinite alternate;
+  }
+
+  .ambient__blob--violet {
+    top: 6vmax;
+    right: -18vmax;
+    background: radial-gradient(circle, var(--violet), transparent 68%);
+    animation: drift-b 32s var(--ease) infinite alternate;
+  }
+
+  .ambient__blob--cyan {
+    bottom: -24vmax;
+    left: 20vmax;
+    background: radial-gradient(circle, var(--cyan), transparent 70%);
+    opacity: 0.22;
+    animation: drift-c 38s var(--ease) infinite alternate;
+  }
+
+  @keyframes drift-a {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(4vmax, 3vmax, 0) scale(1.08);
+    }
+  }
+
+  @keyframes drift-b {
+    from {
+      transform: translate3d(0, 0, 0) scale(1.05);
+    }
+    to {
+      transform: translate3d(-3vmax, 4vmax, 0) scale(1);
+    }
+  }
+
+  @keyframes drift-c {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(5vmax, -3vmax, 0) scale(1.1);
+    }
+  }
+</style>

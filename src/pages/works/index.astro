@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHead from '../../components/PageHead.astro';
+import { getWorks, formatDate } from '../../lib/content';
+
+const works = await getWorks();
+---
+
+<BaseLayout
+  title="作品"
+  description="项目、代码、网站、科研尝试，以及一路上其他的创造。"
+>
+  <section
+    class="mx-auto w-full max-w-[66rem] px-[clamp(1.25rem,5vw,3.5rem)] py-[clamp(4.5rem,11vw,9.5rem)]"
+  >
+    <PageHead
+      eyebrow="作品"
+      title="作品"
+      description="一些做过或正在做的事情——程序、网站、科研尝试，以及其他创作。"
+    />
+
+    {
+      works.length === 0 ? (
+        <p class="text-ink-mute">
+          还没有作品。在 <code>src/content/works/</code> 下新建 Markdown 文件即可。
+        </p>
+      ) : (
+        <ul class="grid grid-cols-1 gap-[clamp(1.25rem,3vw,2rem)] sm:grid-cols-2">
+          {works.map((work, i) => (
+            <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>
+              <a
+                href={`/works/${work.id}`}
+                class="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-white/60 shadow-soft backdrop-blur-md transition-all duration-500 ease-gentle hover:-translate-y-1.5 hover:shadow-glow"
+              >
+                {work.data.cover && (
+                  <div class="overflow-hidden">
+                    <img
+                      src={work.data.cover}
+                      alt={work.data.title}
+                      class="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-[1.03]"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <div class="flex flex-1 flex-col p-[clamp(1.1rem,2.4vw,1.5rem)]">
+                  <div class="flex items-center justify-between gap-3 text-[0.72rem] uppercase tracking-[0.16em] text-ink-mute">
+                    <span>{work.data.category}</span>
+                    <span class="tabular-nums">{formatDate(work.data.date)}</span>
+                  </div>
+                  <h2 class="mt-2 text-[1.15rem] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
+                    {work.data.title}
+                  </h2>
+                  <p class="mt-2 text-[0.95rem] leading-[1.75] text-ink-soft">
+                    {work.data.description}
+                  </p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</BaseLayout>

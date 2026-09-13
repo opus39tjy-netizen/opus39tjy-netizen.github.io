@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHead from '../../components/PageHead.astro';
+import { getWriting, formatDate } from '../../lib/content';
+
+const posts = await getWriting();
+---
+
+<BaseLayout
+  title="文章"
+  description="技术思考、生物医学工程、学习记录，以及一些更安静的随笔。"
+>
+  <section
+    class="mx-auto w-full max-w-[66rem] px-[clamp(1.25rem,5vw,3.5rem)] py-[clamp(4.5rem,11vw,9.5rem)]"
+  >
+    <PageHead
+      eyebrow="文章"
+      title="文章"
+      description="技术思考、生物医学工程、学习记录，以及偶尔的随笔。最新的排在前面。"
+    />
+
+    {
+      posts.length === 0 ? (
+        <p class="text-ink-mute">
+          还没有文章。在 <code>src/content/writing/</code> 下新建 Markdown 文件即可。
+        </p>
+      ) : (
+        <ul class="border-t border-line">
+          {posts.map((post, i) => (
+            <li class="reveal border-b border-line" style={`--reveal-delay:${i * 70}ms`}>
+              <a
+                href={`/writing/${post.id}`}
+                class="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 py-[clamp(1.05rem,3vw,1.6rem)] transition-transform duration-500 ease-gentle hover:translate-x-1.5"
+              >
+                <span class="text-[clamp(1.05rem,0.98rem_+_0.5vw,1.3rem)] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
+                  {post.data.title}
+                </span>
+                <span class="whitespace-nowrap text-[0.85rem] tabular-nums text-ink-mute">
+                  {post.data.category} · {formatDate(post.data.date)}
+                </span>
+                <span class="col-span-full mt-0.5 max-w-[42rem] text-[0.95rem] text-ink-soft">
+                  {post.data.description}
+                </span>
+                {post.data.tags.length > 0 && (
+                  <span class="col-span-full mt-2 flex flex-wrap gap-2">
+                    {post.data.tags.map((tag) => (
+                      <span class="rounded-full bg-accent/10 px-3 py-1 text-[0.7rem] uppercase tracking-[0.14em] text-accent-strong">
+                        {tag}
+                      </span>
+                    ))}
+                  </span>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</BaseLayout>

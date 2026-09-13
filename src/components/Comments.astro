@@ -1,0 +1,73 @@
+---
+import { giscus } from '../data/giscus';
+
+const configured =
+  !giscus.repoId.startsWith('REPLACE') && !giscus.repo.startsWith('your-name');
+---
+
+<section class="reveal mt-20 border-t border-line pt-10">
+  <h2 class="text-[1.2rem] font-medium tracking-[-0.01em]">评论</h2>
+
+  <div
+    class="mt-6"
+    data-giscus
+    data-repo={giscus.repo}
+    data-repo-id={giscus.repoId}
+    data-category={giscus.category}
+    data-category-id={giscus.categoryId}
+    data-mapping={giscus.mapping}
+    data-strict={giscus.strict}
+    data-reactions-enabled={giscus.reactionsEnabled}
+    data-emit-metadata={giscus.emitMetadata}
+    data-input-position={giscus.inputPosition}
+    data-theme={giscus.theme}
+    data-lang={giscus.lang}
+  >
+  </div>
+
+  {
+    !configured && import.meta.env.DEV && (
+      <p class="mt-4 text-[0.85rem] leading-[1.8] text-ink-mute">
+        评论尚未配置：在 <code class="rounded-xs border border-line bg-tint px-1.5 py-0.5">src/data/giscus.ts</code>
+        中填入 GitHub Discussions 信息后即可显示。
+      </p>
+    )
+  }
+</section>
+
+<script>
+  function mountGiscus() {
+    document.querySelectorAll<HTMLElement>('[data-giscus]').forEach((host) => {
+      if (host.dataset.mounted === 'true') return;
+      host.dataset.mounted = 'true';
+
+      const script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      script.crossOrigin = 'anonymous';
+
+      const attrs: Record<string, string> = {
+        repo: 'repo',
+        repoId: 'repo-id',
+        category: 'category',
+        categoryId: 'category-id',
+        mapping: 'mapping',
+        strict: 'strict',
+        reactionsEnabled: 'reactions-enabled',
+        emitMetadata: 'emit-metadata',
+        inputPosition: 'input-position',
+        theme: 'theme',
+        lang: 'lang',
+      };
+
+      Object.entries(attrs).forEach(([key, attr]) => {
+        const value = host.dataset[key];
+        if (value !== undefined) script.setAttribute('data-' + attr, value);
+      });
+
+      host.appendChild(script);
+    });
+  }
+
+  document.addEventListener('astro:page-load', mountGiscus);
+</script>

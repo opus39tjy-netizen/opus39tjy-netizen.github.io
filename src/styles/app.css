@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./global.css";
+
+/* Tailwind v4 design tokens.
+   Values mirror src/styles/tokens.css; keep the two in sync when adjusting. */
+@theme {
+  --color-canvas: #fafbfc;
+  --color-tint: #f5f8fb;
+  --color-ink: #2b2f36;
+  --color-ink-soft: #5d646f;
+  --color-ink-mute: #8b929d;
+  --color-line: #e8ecf1;
+  --color-line-strong: #d9e0e8;
+  --color-mist-blue: #aec7e0;
+  --color-mist-violet: #c9c2e8;
+  --color-mist-cyan: #b8dde3;
+  --color-accent: #7d9cc1;
+  --color-accent-strong: #5f83ad;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-card: 14px;
+  --radius-lg: 22px;
+
+  --shadow-soft: 0 10px 34px rgba(43, 47, 54, 0.05);
+  --shadow-glow: 0 12px 48px rgba(174, 199, 224, 0.22);
+
+  --ease-gentle: cubic-bezier(0.22, 0.61, 0.36, 1);
+}

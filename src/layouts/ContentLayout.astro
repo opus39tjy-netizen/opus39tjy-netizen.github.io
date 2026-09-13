@@ -1,0 +1,93 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Comments from '../components/Comments.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  eyebrow?: string;
+  date?: Date;
+  tags?: string[];
+  cover?: string;
+  comments?: boolean;
+}
+
+const {
+  title,
+  description,
+  eyebrow,
+  date,
+  tags = [],
+  cover,
+  comments = false,
+} = Astro.props;
+
+const dateLabel = date ? date.toISOString().slice(0, 10) : undefined;
+---
+
+<BaseLayout title={title} description={description}>
+  <article
+    class="mx-auto w-full max-w-[46rem] px-[clamp(1.25rem,5vw,3.5rem)] pb-[clamp(4rem,10vw,8rem)] pt-[clamp(3rem,9vw,7rem)]"
+  >
+    <header class="reveal">
+      {
+        eyebrow && (
+          <p class="text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute">
+            {eyebrow}
+          </p>
+        )
+      }
+      <h1
+        class="mt-3 text-[clamp(2rem,1.4rem_+_3vw,3.4rem)] font-medium leading-[1.15] tracking-[-0.02em]"
+      >
+        {title}
+      </h1>
+      {
+        description && (
+          <p
+            class="mt-4 max-w-[42rem] text-[clamp(1.05rem,0.98rem_+_0.4vw,1.3rem)] leading-[1.7] text-ink-soft"
+          >
+            {description}
+          </p>
+        )
+      }
+      {
+        (dateLabel || tags.length > 0) && (
+          <div class="mt-6 flex flex-wrap items-center gap-3 text-[0.85rem] text-ink-mute">
+            {dateLabel && <time datetime={dateLabel}>{dateLabel}</time>}
+            {tags.length > 0 && (
+              <ul class="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <li class="rounded-full bg-accent/10 px-3 py-1 text-[0.7rem] uppercase tracking-[0.14em] text-accent-strong">
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )
+      }
+    </header>
+
+    {
+      cover && (
+        <div class="reveal mt-10" style="--reveal-delay:120ms">
+          <img
+            src={cover}
+            alt={title}
+            class="w-full rounded-card border border-line"
+            loading="eager"
+          />
+        </div>
+      )
+    }
+
+    <slot name="links" />
+
+    <div class="prose reveal mt-12" style="--reveal-delay:160ms">
+      <slot />
+    </div>
+
+    {comments && <Comments />}
+  </article>
+</BaseLayout>

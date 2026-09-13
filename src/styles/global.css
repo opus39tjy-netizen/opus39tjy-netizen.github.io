@@ -1,0 +1,141 @@
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(125, 156, 193, 0.14);
+  color: #2b2f36;
+}
+
+:focus-visible {
+  outline: 2px solid #7d9cc1;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Prose (Markdown body) ---------- */
+.prose {
+  max-width: var(--measure);
+  color: var(--text-soft);
+}
+
+.prose > * + * {
+  margin-top: 1.35em;
+}
+
+.prose h2 {
+  font-size: clamp(1.4rem, 1.2rem + 1vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin-top: 2.4em;
+}
+
+.prose h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-top: 2em;
+}
+
+.prose a {
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 240ms var(--ease);
+}
+
+.prose a:hover {
+  text-decoration-color: var(--accent);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.25rem;
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+.prose blockquote {
+  margin-inline: 0;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--line-strong);
+  color: var(--text-mute);
+  font-style: italic;
+}
+
+.prose code {
+  font-size: 0.9em;
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  padding: 0.15em 0.4em;
+}
+
+.prose pre {
+  overflow-x: auto;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-tint);
+}
+
+.prose pre code {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.prose img {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin-block: 2.5em;
+}
+
+/* ---------- Reveal motion (opt-in via .js so no-JS users see content) ---------- */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

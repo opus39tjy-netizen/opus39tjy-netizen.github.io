@@ -1,0 +1,76 @@
+---
+import '../styles/app.css';
+import { ClientRouter } from 'astro:transitions';
+import AmbientBackground from '../components/AmbientBackground.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = site.description } = Astro.props;
+const pageTitle = title ? `${title} · ${site.name}` : site.title;
+const pathname = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{pageTitle}</title>
+    <ClientRouter />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+
+  <body
+    class="min-h-screen overflow-x-hidden bg-canvas font-sans text-ink antialiased"
+  >
+    <AmbientBackground />
+    <Nav pathname={pathname} />
+    <main class="relative z-[1]" transition:animate="fade">
+      <slot />
+    </main>
+    <Footer />
+
+    <script is:inline>
+      function initReveal() {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var nodes = document.querySelectorAll('.reveal:not(.is-visible)');
+
+        if (reduce || !('IntersectionObserver' in window)) {
+          nodes.forEach(function (el) {
+            el.classList.add('is-visible');
+          });
+          return;
+        }
+
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+        );
+
+        nodes.forEach(function (el) {
+          observer.observe(el);
+        });
+      }
+
+      document.addEventListener('astro:page-load', initReveal);
+    </script>
+  </body>
+</html>

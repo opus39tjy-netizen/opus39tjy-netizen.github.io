@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHead from '../../components/PageHead.astro';
+import { getCourse, formatDate } from '../../lib/content';
+
+const courses = await getCourse();
+---
+
+<BaseLayout
+  title="课程"
+  description="来自课堂与自学的结构化笔记，放在这里，方便以后还能找到。"
+>
+  <section
+    class="mx-auto w-full max-w-[66rem] px-[clamp(1.25rem,5vw,3.5rem)] py-[clamp(4.5rem,11vw,9.5rem)]"
+  >
+    <PageHead
+      eyebrow="课程"
+      title="课程笔记"
+      description="笔记按课程分组，再按章节排序。写给未来的自己——清晰、缓慢，也诚实面对还没弄懂的地方。"
+    />
+
+    {
+      courses.length === 0 ? (
+        <p class="text-ink-mute">
+          还没有课程。在 <code>src/content/course/</code> 下新建 Markdown 文件即可。
+        </p>
+      ) : (
+        <ul class="grid grid-cols-1 gap-[clamp(1.25rem,3vw,2rem)] sm:grid-cols-2">
+          {courses.map((course, i) => (
+            <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>
+              <a
+                href={`/course/${course.id}`}
+                class="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-white/60 shadow-soft backdrop-blur-md transition-all duration-500 ease-gentle hover:-translate-y-1.5 hover:shadow-glow"
+              >
+                {course.data.cover && (
+                  <div class="overflow-hidden">
+                    <img
+                      src={course.data.cover}
+                      alt={course.data.title}
+                      class="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-[1.03]"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <div class="flex flex-1 flex-col p-[clamp(1.1rem,2.4vw,1.5rem)]">
+                  <div class="flex items-center justify-between gap-3 text-[0.72rem] uppercase tracking-[0.16em] text-ink-mute">
+                    <span>{course.data.category}</span>
+                    <span class="tabular-nums">{formatDate(course.data.date)}</span>
+                  </div>
+                  <h2 class="mt-2 text-[1.15rem] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
+                    {course.data.title}
+                  </h2>
+                  <p class="mt-2 text-[0.95rem] leading-[1.75] text-ink-soft">
+                    {course.data.description}
+                  </p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</BaseLayout>

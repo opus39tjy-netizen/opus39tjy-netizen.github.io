@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHead from '../../components/PageHead.astro';
+import AudioPlayer from '../../components/AudioPlayer.astro';
+import { getMusic, formatDate } from '../../lib/content';
+
+const music = await getMusic();
+
+const playable = music
+  .filter((entry) => entry.data.audio)
+  .map((entry) => ({
+    title: entry.data.title,
+    artist: entry.data.artist ?? entry.data.category,
+    src: entry.data.audio as string,
+  }));
+---
+
+<BaseLayout
+  title="音乐"
+  description="最近在听的东西，以及——以后——自己试着做的音乐。"
+>
+  <section
+    class="mx-auto w-full max-w-[66rem] px-[clamp(1.25rem,5vw,3.5rem)] py-[clamp(4.5rem,11vw,9.5rem)]"
+  >
+    <PageHead
+      eyebrow="音乐"
+      title="音乐"
+      description="记录最近在听的音乐，也为将来自己的作品留一个位置。"
+    />
+
+    {
+      playable.length > 0 && (
+        <div class="mb-[clamp(2.5rem,6vw,4rem)] max-w-[42rem]">
+          <p class="reveal mb-4 text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute">
+            播放器
+          </p>
+          <AudioPlayer tracks={playable} />
+        </div>
+      )
+    }
+
+    {
+      music.length === 0 ? (
+        <p class="text-ink-mute">
+          还没有音乐条目。在 <code>src/content/music/</code> 下新建 Markdown 文件即可。
+        </p>
+      ) : (
+        <ul class="grid grid-cols-1 gap-[clamp(1.25rem,3vw,2rem)] sm:grid-cols-2">
+          {music.map((entry, i) => (
+            <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>
+              <a
+                href={`/music/${entry.id}`}
+                class="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-white/60 shadow-soft backdrop-blur-md transition-all duration-500 ease-gentle hover:-translate-y-1.5 hover:shadow-glow"
+              >
+                {entry.data.cover && (
+                  <div class="relative overflow-hidden">
+                    <img
+                      src={entry.data.cover}
+                      alt={entry.data.title}
+                      class="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-[1.03]"
+                      loading="lazy"
+                    />
+                    {entry.data.audio && (
+                      <span
+                        class="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-white/80 text-accent-strong shadow-soft backdrop-blur-sm"
+                        aria-hidden="true"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M8 5.14v13.72a.5.5 0 0 0 .76.43l11-6.86a.5.5 0 0 0 0-.86l-11-6.86A.5.5 0 0 0 8 5.14Z" />
+                        </svg>
+                      </span>
+                    )}
+                  </div>
+                )}
+                <div class="flex flex-1 flex-col p-[clamp(1.1rem,2.4vw,1.5rem)]">
+                  <div class="flex items-center justify-between gap-3 text-[0.72rem] uppercase tracking-[0.16em] text-ink-mute">
+                    <span>{entry.data.category}</span>
+                    <span class="tabular-nums">{formatDate(entry.data.date)}</span>
+                  </div>
+                  <h2 class="mt-2 text-[1.15rem] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
+                    {entry.data.title}
+                  </h2>
+                  {entry.data.artist && (
+                    <p class="mt-1 text-[0.85rem] text-ink-mute">{entry.data.artist}</p>
+                  )}
+                  <p class="mt-2 text-[0.95rem] leading-[1.75] text-ink-soft">
+                    {entry.data.description}
+                  </p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="页面未找到" description="这个页面无法找到。">
+  <section
+    class="mx-auto flex min-h-[clamp(24rem,60vh,38rem)] w-full max-w-[66rem] flex-col justify-center px-[clamp(1.25rem,5vw,3.5rem)] py-[clamp(4rem,12vw,8rem)]"
+  >
+    <p class="reveal text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute">
+      404
+    </p>
+    <h1
+      class="reveal mt-3 text-[clamp(2rem,1.4rem_+_3vw,3.4rem)] font-medium leading-[1.15] tracking-[-0.02em]"
+      style="--reveal-delay:80ms"
+    >
+      这个页面飘走了
+    </h1>
+    <p
+      class="reveal mt-4 max-w-[42rem] text-[clamp(1.05rem,0.98rem_+_0.4vw,1.3rem)] leading-[1.7] text-ink-soft"
+      style="--reveal-delay:160ms"
+    >
+      链接可能已经旧了，或者这个页面还没有出现。
+    </p>
+    <p class="reveal mt-8" style="--reveal-delay:240ms">
+      <a
+        class="text-[0.9rem] text-ink-soft transition-colors duration-300 ease-gentle hover:text-accent-strong"
+        href="/">← 回到首页</a
+      >
+    </p>
+  </section>
+</BaseLayout>

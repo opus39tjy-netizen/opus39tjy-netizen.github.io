@@ -1,0 +1,193 @@
+# Sveltia CMS configuration for Opus's personal site
+# Docs: https://sveltiacms.app
+#
+# Local editing:  npm run dev  ->  http://localhost:4321/admin/index.html
+#                 (Chromium browser, click "Work with Local Repository",
+#                  select the project root D:\000projects)
+# Remote editing: https://opus39tjy-netizen.github.io/admin/
+#                 (sign in with a GitHub personal access token)
+
+backend:
+  name: github
+  repo: opus39tjy-netizen/opus39tjy-netizen.github.io
+  branch: main
+
+site_url: https://opus39tjy-netizen.github.io
+display_url: https://opus39tjy-netizen.github.io
+
+# Top-level media folder: cover images and inline images go to public/images
+media_folder: /public/images
+public_folder: /images
+
+media_libraries:
+  default:
+    config:
+      slugify_filename: true
+      max_file_size: 26214400 # 25 MB, keeps the Git repo small
+
+collections:
+  - name: writing
+    label: 文章
+    label_singular: 一篇文章
+    description: 技术思考、生物医学工程、学习记录与随笔。
+    folder: src/content/writing
+    create: true
+    format: yaml-frontmatter
+    identifier_field: title
+    fields:
+      - { name: title, label: 标题, widget: string }
+      - { name: description, label: 摘要, widget: text }
+      - {
+          name: date,
+          label: 日期,
+          widget: datetime,
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+        }
+      - { name: category, label: 分类, widget: string, default: 随笔 }
+      - { name: tags, label: 标签, widget: list, required: false, default: [] }
+      - { name: cover, label: 封面图, widget: image, required: false }
+      - { name: url, label: 外部链接, widget: string, required: false }
+      - { name: draft, label: 草稿（不显示）, widget: boolean, default: false }
+      - { name: body, label: 正文, widget: markdown }
+
+  - name: works
+    label: 作品
+    label_singular: 一个作品
+    description: 项目、网站、科研尝试与创作。
+    folder: src/content/works
+    create: true
+    format: yaml-frontmatter
+    identifier_field: title
+    fields:
+      - { name: title, label: 标题, widget: string }
+      - { name: description, label: 摘要, widget: text }
+      - {
+          name: date,
+          label: 日期,
+          widget: datetime,
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+        }
+      - { name: category, label: 分类, widget: string, default: 项目 }
+      - { name: tags, label: 标签, widget: list, required: false, default: [] }
+      - { name: cover, label: 封面图, widget: image, required: false }
+      - { name: url, label: 外部链接（大视频等）, widget: string, required: false }
+      - name: links
+        label: 外部链接列表
+        widget: list
+        required: false
+        default: []
+        fields:
+          - { name: label, label: 名称, widget: string }
+          - { name: href, label: 链接, widget: string }
+      - name: video
+        label: 视频（小文件，可选）
+        widget: file
+        required: false
+        media_folder: /public/videos
+        public_folder: /videos
+      - { name: draft, label: 草稿（不显示）, widget: boolean, default: false }
+      - { name: body, label: 正文, widget: markdown }
+
+  - name: music
+    label: 音乐
+    label_singular: 一条音乐
+    description: 在听的音乐，以及自己的创作。
+    folder: src/content/music
+    create: true
+    format: yaml-frontmatter
+    identifier_field: title
+    fields:
+      - { name: title, label: 标题, widget: string }
+      - { name: description, label: 描述, widget: text }
+      - {
+          name: date,
+          label: 日期,
+          widget: datetime,
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+        }
+      - { name: category, label: 分类, widget: string, default: 创作 }
+      - { name: artist, label: 艺人, widget: string, required: false }
+      - name: audio
+        label: 音频文件（MP3 / WAV）
+        widget: file
+        required: false
+        media_folder: /public/audio
+        public_folder: /audio
+      - { name: url, label: 外部收听链接, widget: string, required: false }
+      - { name: cover, label: 封面图, widget: image, required: false }
+      - { name: tags, label: 标签, widget: list, required: false, default: [] }
+      - name: links
+        label: 外部链接列表
+        widget: list
+        required: false
+        default: []
+        fields:
+          - { name: label, label: 名称, widget: string }
+          - { name: href, label: 链接, widget: string }
+      - name: video
+        label: 视频（小文件，可选）
+        widget: file
+        required: false
+        media_folder: /public/videos
+        public_folder: /videos
+      - { name: draft, label: 草稿（不显示）, widget: boolean, default: false }
+      - { name: body, label: 正文, widget: markdown }
+
+  - name: course
+    label: 课程
+    label_singular: 一门课程
+    description: 课程笔记与学习内容。
+    folder: src/content/course
+    create: true
+    format: yaml-frontmatter
+    identifier_field: title
+    fields:
+      - { name: title, label: 标题, widget: string }
+      - { name: description, label: 描述, widget: text }
+      - {
+          name: date,
+          label: 日期,
+          widget: datetime,
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+        }
+      - { name: category, label: 分类, widget: string, default: 课程 }
+      - { name: order, label: 排序, widget: number, required: false, value_type: int }
+      - { name: cover, label: 封面图, widget: image, required: false }
+      - { name: tags, label: 标签, widget: list, required: false, default: [] }
+      - { name: draft, label: 草稿（不显示）, widget: boolean, default: false }
+      - { name: body, label: 正文, widget: markdown }
+
+  - name: settings
+    label: 站点设置
+    description: 首页显示的名字与标语。
+    files:
+      - name: site
+        label: 站点信息
+        file: src/data/site.json
+        fields:
+          - { name: name, label: 名字 / 标识, widget: string }
+          - { name: title, label: 浏览器标题, widget: string }
+          - { name: tagline, label: 首页标语, widget: string }
+          - { name: description, label: 网站描述, widget: text }
+
+  - name: pages
+    label: 页面
+    files:
+      - name: about
+        label: 关于页
+        file: src/content/pages/about.md
+        fields:
+          - { name: title, label: 标题, widget: string, default: 关于 }
+          - {
+              name: eyebrow,
+              label: 小标签,
+              widget: string,
+              required: false,
+              default: 关于,
+            }
+          - { name: description, label: 描述, widget: text, required: false }
+          - { name: body, label: 正文, widget: markdown }
