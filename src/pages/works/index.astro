@@ -13,11 +13,7 @@ const works = await getWorks();
   <section
     class="mx-auto w-full max-w-[66rem] px-[clamp(1.25rem,5vw,3.5rem)] py-[clamp(4.5rem,11vw,9.5rem)]"
   >
-    <PageHead
-      eyebrow="作品"
-      title="作品"
-      description="一些做过或正在做的事情——程序、网站、科研尝试，以及其他创作。"
-    />
+    <PageHead title="作品" />
 
     {
       works.length === 0 ? null : (

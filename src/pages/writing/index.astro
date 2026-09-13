@@ -13,11 +13,7 @@ const posts = await getWriting();
   <section
     class="mx-auto w-full max-w-[66rem] px-[clamp(1.25rem,5vw,3.5rem)] py-[clamp(4.5rem,11vw,9.5rem)]"
   >
-    <PageHead
-      eyebrow="文章"
-      title="文章"
-      description="技术思考、生物医学工程、学习记录，以及偶尔的随笔。最新的排在前面。"
-    />
+    <PageHead title="文章" />
 
     {
       posts.length === 0 ? null : (
