@@ -29,7 +29,6 @@ collections:
   - name: writing
     label: 文章
     label_singular: 一篇文章
-    description: 技术思考、生物医学工程、学习记录与随笔。
     folder: src/content/writing
     create: true
     format: yaml-frontmatter
@@ -54,7 +53,6 @@ collections:
   - name: works
     label: 作品
     label_singular: 一个作品
-    description: 项目、网站、科研尝试与创作。
     folder: src/content/works
     create: true
     format: yaml-frontmatter
@@ -93,7 +91,6 @@ collections:
   - name: music
     label: 音乐
     label_singular: 一条音乐
-    description: 在听的音乐，以及自己的创作。
     folder: src/content/music
     create: true
     format: yaml-frontmatter
@@ -139,7 +136,6 @@ collections:
   - name: course
     label: 课程
     label_singular: 一门课程
-    description: 课程笔记与学习内容。
     folder: src/content/course
     create: true
     format: yaml-frontmatter
@@ -163,7 +159,6 @@ collections:
 
   - name: settings
     label: 站点设置
-    description: 首页显示的名字与标语。
     files:
       - name: site
         label: 站点信息
