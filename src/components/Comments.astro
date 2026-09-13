@@ -63,4 +63,5 @@ const configured = Boolean(giscus.repoId) && Boolean(giscus.categoryId);
   }
 
   document.addEventListener('astro:page-load', mountGiscus);
+  mountGiscus();
 </script>
