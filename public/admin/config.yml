@@ -3,7 +3,7 @@
 #
 # Local editing:  npm run dev  ->  http://localhost:4321/admin/index.html
 #                 (Chromium browser, click "Work with Local Repository",
-#                  select the project root D:\000projects)
+#                  select the project root D:\000projects\mywebsite)
 # Remote editing: https://opus39tjy-netizen.github.io/admin/
 #                 (sign in with a GitHub personal access token)
 

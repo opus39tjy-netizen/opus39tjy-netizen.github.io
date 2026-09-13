@@ -51,25 +51,31 @@ const recent = await getRecent(4);
       >
     </div>
 
-    <ul class="reveal border-t border-line">
-      {
-        recent.map((item) => (
-          <li class="border-b border-line">
-            <a
-              href={item.href}
-              class="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 py-[clamp(1.05rem,3vw,1.6rem)] transition-transform duration-500 ease-gentle hover:translate-x-1.5"
-            >
-              <span class="text-[clamp(1.05rem,0.98rem_+_0.5vw,1.3rem)] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
-                {item.title}
-              </span>
-              <span class="whitespace-nowrap text-[0.85rem] tabular-nums text-ink-mute">
-                {item.category} · {formatDate(item.date)}
-              </span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    {
+      recent.length > 0 ? (
+        <ul class="reveal border-t border-line">
+          {recent.map((item) => (
+            <li class="border-b border-line">
+              <a
+                href={item.href}
+                class="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 py-[clamp(1.05rem,3vw,1.6rem)] transition-transform duration-500 ease-gentle hover:translate-x-1.5"
+              >
+                <span class="text-[clamp(1.05rem,0.98rem_+_0.5vw,1.3rem)] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
+                  {item.title}
+                </span>
+                <span class="whitespace-nowrap text-[0.85rem] tabular-nums text-ink-mute">
+                  {item.category} · {formatDate(item.date)}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="reveal max-w-[42rem] text-[0.98rem] leading-[1.9] text-ink-mute">
+          这里还很安静。第一篇内容，正在路上。
+        </p>
+      )
+    }
   </section>
 </BaseLayout>
 
