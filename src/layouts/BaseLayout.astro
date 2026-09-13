@@ -32,7 +32,7 @@ const pathname = Astro.url.pathname;
   </head>
 
   <body
-    class="min-h-screen overflow-x-hidden bg-canvas font-sans text-ink antialiased"
+    class="min-h-screen bg-canvas font-sans text-ink antialiased"
   >
     <span id="page-top" aria-hidden="true"></span>
     <AmbientBackground />
@@ -47,7 +47,7 @@ const pathname = Astro.url.pathname;
         <button
           type="button"
           data-scroll-toggle
-          class="fixed inset-x-0 bottom-[calc(1.75rem_+_env(safe-area-inset-bottom))] z-50 mx-auto grid h-12 w-12 touch-manipulation place-items-center rounded-full border border-line bg-white/85 text-ink-mute shadow-soft transition-all duration-300 ease-gentle active:scale-95 hover:text-ink"
+          class="fixed inset-x-0 bottom-[calc(4.5rem_+_env(safe-area-inset-bottom))] z-50 mx-auto grid h-12 w-12 touch-manipulation place-items-center rounded-full border border-line bg-white/85 text-ink-mute shadow-soft transition-all duration-300 ease-gentle active:scale-95 hover:text-ink sm:bottom-7"
           aria-label="向下滚动查看最近内容"
         >
           <svg
@@ -149,6 +149,18 @@ const pathname = Astro.url.pathname;
         event.preventDefault();
         scrollToSection(isScrolledDown() ? 'page-top' : 'recent');
       });
+
+      document.addEventListener(
+        'touchend',
+        (event) => {
+          const target = event.target as Element | null;
+          const button = target?.closest('[data-scroll-toggle]');
+          if (!button) return;
+          event.preventDefault();
+          scrollToSection(isScrolledDown() ? 'page-top' : 'recent');
+        },
+        { passive: false }
+      );
 
       window.addEventListener('scroll', updateScrollToggle, { passive: true });
       window.addEventListener('resize', updateScrollToggle);
