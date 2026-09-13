@@ -52,7 +52,7 @@ collections:
         media_folder: /public/course/files
         public_folder: /course/files
       - { name: tags, label: 标签, widget: list, required: false, default: [] }
-      - { name: body, label: 正文（可插入图片）, widget: markdown }
+      - { name: body, label: 正文（可插入图片）, widget: markdown, required: false }
 
   - name: writing
     label: 文章
@@ -72,7 +72,7 @@ collections:
       - { name: cover, label: 封面图, widget: image, required: false }
       - { name: url, label: 外部链接, widget: string, required: false }
       - { name: draft, label: 草稿（不显示）, widget: boolean, default: false, required: false }
-      - { name: body, label: 正文, widget: markdown }
+      - { name: body, label: 正文, widget: markdown, required: false }
 
   - name: music
     label: 音乐
@@ -113,7 +113,7 @@ collections:
         media_folder: /public/music/videos
         public_folder: /music/videos
       - { name: draft, label: 草稿（不显示）, widget: boolean, default: false, required: false }
-      - { name: body, label: 正文, widget: markdown }
+      - { name: body, label: 正文, widget: markdown, required: false }
 
   - name: comments
     label: 评论设置
@@ -159,4 +159,4 @@ collections:
           - { name: title, label: 标题, widget: string, default: 关于 }
           - { name: eyebrow, label: 小标签, widget: string, required: false, default: 关于 }
           - { name: description, label: 描述, widget: text, required: false }
-          - { name: body, label: 正文, widget: markdown }
+          - { name: body, label: 正文, widget: markdown, required: false }
