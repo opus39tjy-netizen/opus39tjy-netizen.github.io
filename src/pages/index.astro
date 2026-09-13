@@ -5,7 +5,19 @@ import { site } from '../data/site';
 import { getRecent, formatDate } from '../lib/content';
 
 const recent = await getRecent(4);
-const socials = site.socials ?? [];
+
+function resolveHref(href: string) {
+  const h = (href ?? '').trim();
+  if (/^(https?:|mailto:|tel:)/i.test(h)) return h;
+  if (/^\d+$/.test(h)) return `https://wpa.qq.com/msgrd?v=3&uin=${h}&site=qq&menu=yes`;
+  if (h.includes('@')) return `mailto:${h}`;
+  return h ? `https://${h}` : '#';
+}
+
+const socials = (site.socials ?? []).map((social) => ({
+  label: social.label,
+  href: resolveHref(social.href),
+}));
 ---
 
 <BaseLayout>
