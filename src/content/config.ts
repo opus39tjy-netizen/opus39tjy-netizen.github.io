@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const emptyToUndefined = (value: unknown) =>
-  value === '' ? undefined : value;
+  value === '' || value === null ? undefined : value;
 
 const baseFields = z.object({
   title: z.string(),
@@ -39,7 +39,7 @@ const music = defineCollection({
 const course = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/course' }),
   schema: baseFields.extend({
-    order: z.number().optional(),
+    order: z.preprocess(emptyToUndefined, z.number().optional()),
     files: fileList,
   }),
 });
