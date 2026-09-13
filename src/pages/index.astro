@@ -4,31 +4,98 @@ import { site } from '../data/site';
 import { getRecent, formatDate } from '../lib/content';
 
 const recent = await getRecent(4);
+const socials = site.socials ?? [];
 ---
 
 <BaseLayout>
   <section
-    class="mx-auto w-full max-w-[66rem] px-[clamp(1.25rem,5vw,3.5rem)] pb-[clamp(2rem,5vw,3rem)] pt-[clamp(4rem,10vw,7rem)] text-center"
+    class="relative isolate flex min-h-[calc(100svh-4.5rem)] flex-col items-center justify-center overflow-hidden px-[clamp(1.25rem,5vw,3.5rem)] py-[clamp(3rem,8vw,6rem)] text-center"
   >
-    <h1
-      class="reveal text-[clamp(1.9rem,1.2rem_+_3vw,3rem)] font-medium leading-[1.2] tracking-[-0.02em]"
-    >
-      {site.heading}
-    </h1>
     {
-      site.tagline && (
-        <p
-          class="reveal mt-4 text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute"
-          style="--reveal-delay:120ms"
-        >
-          {site.tagline}
-        </p>
+      site.heroImage && (
+        <img
+          src={site.heroImage}
+          alt=""
+          aria-hidden="true"
+          class="absolute inset-0 z-0 h-full w-full object-cover"
+        />
       )
     }
+    <div
+      class="absolute inset-0 z-10 bg-[linear-gradient(to_bottom,rgba(250,251,252,0.72),rgba(250,251,252,0.45)_55%,rgba(250,251,252,0.82))]"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div class="relative z-20 flex flex-col items-center">
+      <h1
+        class="reveal text-[clamp(2rem,1.3rem_+_3.2vw,3.4rem)] font-medium leading-[1.15] tracking-[-0.02em]"
+      >
+        {site.heading}
+      </h1>
+      {
+        site.tagline && (
+          <p
+            class="reveal mt-4 text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute"
+            style="--reveal-delay:120ms"
+          >
+            {site.tagline}
+          </p>
+        )
+      }
+
+      {
+        socials.length > 0 && (
+          <ul
+            class="reveal mt-8 flex flex-wrap items-center justify-center gap-3"
+            style="--reveal-delay:200ms"
+          >
+            {socials.map((social) => (
+              <li>
+                <a
+                  href={social.href}
+                  target={social.href.startsWith('http') ? '_blank' : undefined}
+                  rel={
+                    social.href.startsWith('http')
+                      ? 'noopener noreferrer'
+                      : undefined
+                  }
+                  aria-label={social.label}
+                  title={social.label}
+                  class="grid h-11 w-11 place-items-center rounded-full border border-white/50 bg-white/30 text-[0.95rem] font-medium text-ink shadow-soft backdrop-blur-md transition-all duration-300 ease-gentle hover:-translate-y-0.5 hover:bg-white/60"
+                >
+                  {social.label.trim().charAt(0).toUpperCase()}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+
+    <a
+      href="#recent"
+      class="absolute bottom-7 left-1/2 z-20 -translate-x-1/2 text-ink-mute transition-colors duration-300 ease-gentle hover:text-ink"
+      aria-label="向下滚动查看最近内容"
+    >
+      <svg
+        class="scroll-arrow h-6 w-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M6 9l6 6 6-6"></path>
+      </svg>
+    </a>
   </section>
 
   <section
-    class="mx-auto w-full max-w-[56rem] px-[clamp(1.25rem,5vw,3.5rem)] pb-[clamp(4rem,10vw,8rem)] pt-[clamp(1rem,3vw,2rem)]"
+    id="recent"
+    class="mx-auto w-full max-w-[64rem] scroll-mt-24 px-[clamp(1.25rem,5vw,3.5rem)] pb-[clamp(4rem,10vw,8rem)] pt-[clamp(3rem,7vw,5rem)]"
   >
     <div
       class="reveal mb-[clamp(1.25rem,3vw,2rem)] flex items-baseline justify-between gap-6"
@@ -42,19 +109,36 @@ const recent = await getRecent(4);
 
     {
       recent.length > 0 ? (
-        <ul class="reveal border-t border-line">
-          {recent.map((item) => (
-            <li class="border-b border-line">
+        <ul class="grid grid-cols-1 gap-[clamp(1rem,2.5vw,1.5rem)] sm:grid-cols-2">
+          {recent.map((item, i) => (
+            <li class="reveal" style={`--reveal-delay:${i * 70}ms`}>
               <a
                 href={item.href}
-                class="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 py-[clamp(1.05rem,3vw,1.6rem)] transition-transform duration-500 ease-gentle hover:translate-x-1.5"
+                class="group flex h-full gap-4 rounded-card border border-line bg-white/60 p-3 shadow-soft backdrop-blur-md transition-all duration-500 ease-gentle hover:-translate-y-1 hover:shadow-glow"
               >
-                <span class="text-[clamp(1.05rem,0.98rem_+_0.5vw,1.3rem)] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
-                  {item.title}
-                </span>
-                <span class="whitespace-nowrap text-[0.85rem] tabular-nums text-ink-mute">
-                  {item.category} · {formatDate(item.date)}
-                </span>
+                <div class="h-20 w-20 shrink-0 overflow-hidden rounded-sm bg-tint">
+                  {item.cover ? (
+                    <img
+                      src={item.cover}
+                      alt={item.title}
+                      class="h-full w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="h-full w-full bg-[linear-gradient(135deg,#c9c2e8,#aec7e0_55%,#b8dde3)]" />
+                  )}
+                </div>
+                <div class="min-w-0 flex-1 py-1">
+                  <div class="text-[0.72rem] uppercase tracking-[0.14em] text-ink-mute">
+                    {item.category} · {formatDate(item.date)}
+                  </div>
+                  <h2 class="mt-1.5 line-clamp-2 text-[1.02rem] font-medium leading-[1.4] tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
+                    {item.title}
+                  </h2>
+                  <p class="mt-1 line-clamp-1 text-[0.88rem] text-ink-soft">
+                    {item.description}
+                  </p>
+                </div>
               </a>
             </li>
           ))}
@@ -63,3 +147,21 @@ const recent = await getRecent(4);
     }
   </section>
 </BaseLayout>
+
+<style>
+  .scroll-arrow {
+    animation: scroll-bounce 2.4s var(--ease) infinite;
+  }
+
+  @keyframes scroll-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.55;
+    }
+    50% {
+      transform: translateY(6px);
+      opacity: 1;
+    }
+  }
+</style>

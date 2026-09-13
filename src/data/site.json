@@ -3,5 +3,10 @@
   "heading": "Opus 的个人空间",
   "title": "Opus 的个人空间",
   "tagline": "",
-  "description": "Opus 的个人空间 —— 课程笔记、文章、作品与音乐。"
+  "description": "Opus 的个人空间 —— 课程笔记、文章、作品与音乐。",
+  "heroImage": "/images/wallpaper.jpg",
+  "socials": [
+    { "label": "GitHub", "href": "https://github.com/opus39tjy-netizen" },
+    { "label": "邮箱", "href": "mailto:opus39tjy@gmail.com" }
+  ]
 }

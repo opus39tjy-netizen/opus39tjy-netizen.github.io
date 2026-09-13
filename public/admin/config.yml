@@ -181,6 +181,15 @@ collections:
           - { name: title, label: 浏览器标题, widget: string }
           - { name: tagline, label: 首页小字（可留空）, widget: string, required: false }
           - { name: description, label: 网站描述, widget: text }
+          - { name: heroImage, label: 首页背景图, widget: image, required: false }
+          - name: socials
+            label: 社交链接（圆钮）
+            widget: list
+            required: false
+            default: []
+            fields:
+              - { name: label, label: 名称, widget: string }
+              - { name: href, label: 链接, widget: string }
 
   - name: pages
     label: 页面
