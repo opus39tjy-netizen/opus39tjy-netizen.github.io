@@ -22,7 +22,6 @@ const socials = (site.socials ?? []).map((social) => ({
 
 <BaseLayout>
   <section
-    id="top"
     class="relative isolate flex min-h-[calc(100svh-4.5rem)] flex-col items-center justify-center overflow-hidden px-[clamp(1.25rem,5vw,3.5rem)] py-[clamp(3rem,8vw,6rem)] text-center"
   >
     {
@@ -165,10 +164,17 @@ const socials = (site.socials ?? []).map((social) => ({
 </BaseLayout>
 
 <script>
-  function getToggleState() {
-    const target = document.querySelector('#recent');
-    if (!target) return { ready: false, atRecent: false };
-    return { ready: true, atRecent: target.getBoundingClientRect().top <= 96 };
+  function getScrollTop() {
+    return (
+      window.scrollY ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0
+    );
+  }
+
+  function isScrolledDown() {
+    return getScrollTop() > 40;
   }
 
   function scrollToSection(id: string) {
@@ -180,13 +186,13 @@ const socials = (site.socials ?? []).map((social) => ({
     const button = document.querySelector<HTMLElement>('[data-scroll-toggle]');
     if (!button) return;
     const icon = button.querySelector<SVGElement>('[data-scroll-icon]');
-    const { atRecent } = getToggleState();
+    const down = isScrolledDown();
 
     button.setAttribute(
       'aria-label',
-      atRecent ? '回到顶部' : '向下滚动查看最近内容'
+      down ? '回到顶部' : '向下滚动查看最近内容'
     );
-    if (icon) icon.style.transform = atRecent ? 'rotate(180deg)' : '';
+    if (icon) icon.style.transform = down ? 'rotate(180deg)' : '';
   }
 
   function initScrollToggle() {
@@ -196,12 +202,7 @@ const socials = (site.socials ?? []).map((social) => ({
     if (button && button.dataset.ready !== 'true') {
       button.dataset.ready = 'true';
       button.addEventListener('click', () => {
-        const { ready, atRecent } = getToggleState();
-        if (ready && !atRecent) {
-          scrollToSection('recent');
-        } else {
-          scrollToSection('top');
-        }
+        scrollToSection(isScrolledDown() ? 'page-top' : 'recent');
       });
     }
     updateScrollToggle();

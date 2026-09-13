@@ -34,6 +34,7 @@ const pathname = Astro.url.pathname;
   <body
     class="min-h-screen overflow-x-hidden bg-canvas font-sans text-ink antialiased"
   >
+    <span id="page-top" aria-hidden="true"></span>
     <AmbientBackground />
     <Nav pathname={pathname} />
     <main class="relative z-[1]" transition:animate="fade">
