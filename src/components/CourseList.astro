@@ -10,20 +10,20 @@ interface Props {
 const { entries } = Astro.props;
 ---
 
-<ul class="grid grid-cols-1 gap-[clamp(1.25rem,3vw,2rem)] sm:grid-cols-2">
+<ul class="border-t border-line">
   {
     entries.map((entry, i) => (
-      <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>
+      <li class="reveal border-b border-line" style={`--reveal-delay:${i * 70}ms`}>
         <a
           href={`/course/${entry.id}`}
-          class="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-white/60 shadow-soft backdrop-blur-md transition-all duration-500 ease-gentle hover:-translate-y-1.5 hover:shadow-glow"
+          class="group flex items-start gap-4 py-[clamp(1.05rem,3vw,1.6rem)] transition-transform duration-500 ease-gentle hover:translate-x-1.5 sm:gap-5"
         >
-          <div class="aspect-[16/9] w-full overflow-hidden bg-tint">
+          <div class="h-16 w-16 shrink-0 overflow-hidden rounded-sm bg-tint sm:h-20 sm:w-20">
             {entry.data.cover ? (
               <img
                 src={entry.data.cover}
                 alt={entry.data.title}
-                class="h-full w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-[1.03]"
+                class="h-full w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-105"
                 loading="lazy"
                 decoding="async"
               />
@@ -31,18 +31,28 @@ const { entries } = Astro.props;
               <MediaPlaceholder label="课程" />
             )}
           </div>
-          <div class="flex flex-1 flex-col p-[clamp(1.1rem,2.4vw,1.5rem)]">
-            <div class="flex items-center justify-between gap-3 text-[0.72rem] uppercase tracking-[0.16em] text-ink-mute">
-              <span>{entry.data.category}</span>
-              <span class="tabular-nums">{formatDate(entry.data.date)}</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <span class="text-[clamp(1rem,0.94rem_+_0.4vw,1.15rem)] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
+                {entry.data.title}
+              </span>
+              <span class="whitespace-nowrap text-[0.85rem] tabular-nums text-ink-mute">
+                {entry.data.category} · {formatDate(entry.data.date)}
+              </span>
             </div>
-            <h2 class="mt-2 text-[1.05rem] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
-              {entry.data.title}
-            </h2>
             {entry.data.description && (
-              <p class="mt-2 text-[0.95rem] leading-[1.75] text-ink-soft">
+              <p class="mt-1 max-w-[42rem] text-[0.95rem] text-ink-soft">
                 {entry.data.description}
               </p>
+            )}
+            {entry.data.tags.length > 0 && (
+              <span class="mt-2 flex flex-wrap gap-2">
+                {entry.data.tags.map((tag) => (
+                  <span class="rounded-full bg-accent/10 px-3 py-1 text-[0.7rem] uppercase tracking-[0.14em] text-accent-strong">
+                    {tag}
+                  </span>
+                ))}
+              </span>
             )}
           </div>
         </a>
