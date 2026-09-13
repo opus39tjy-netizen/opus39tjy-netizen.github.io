@@ -85,6 +85,25 @@ const socials = (site.socials ?? []).map((social) => ({
         )
       }
     </div>
+
+    <a
+      href="#recent"
+      class="relative z-20 mt-[clamp(2.5rem,6vw,4rem)] inline-flex flex-col items-center gap-2 text-ink-mute transition-colors duration-300 ease-gentle hover:text-ink"
+      aria-label="向下查看最近内容"
+    >
+      <svg
+        class="h-6 w-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M6 9l6 6 6-6"></path>
+      </svg>
+    </a>
   </section>
 
   <section
@@ -139,5 +158,26 @@ const socials = (site.socials ?? []).map((social) => ({
         </ul>
       ) : null
     }
+
+    <div class="mt-[clamp(3rem,7vw,4.5rem)] flex justify-center">
+      <a
+        href="#page-top"
+        class="inline-flex flex-col items-center gap-2 text-ink-mute transition-colors duration-300 ease-gentle hover:text-ink"
+        aria-label="回到顶部"
+      >
+        <svg
+          class="h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M18 15l-6-6-6 6"></path>
+        </svg>
+      </a>
+    </div>
   </section>
 </BaseLayout>
