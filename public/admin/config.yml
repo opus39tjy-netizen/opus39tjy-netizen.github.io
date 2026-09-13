@@ -6,6 +6,8 @@
 #                  select the project root D:\000projects\mywebsite)
 # Remote editing: https://opus39tjy-netizen.github.io/admin/
 #                 (sign in with a GitHub personal access token)
+#
+# 媒体按板块分开存放：每个集合有自己的 media_folder。
 
 backend:
   name: github
@@ -15,7 +17,7 @@ backend:
 site_url: https://opus39tjy-netizen.github.io
 display_url: https://opus39tjy-netizen.github.io
 
-# Top-level media folder: cover images and inline images go to public/images
+# 顶层媒体目录：站点级素材（如首页背景图）
 media_folder: /public/images
 public_folder: /images
 
@@ -29,11 +31,12 @@ collections:
   - name: course
     label: 课程
     label_singular: 一门课程
-    description: 课程笔记与资料——上传讲义文件（PDF/PPT/图片等）结合文字。
     folder: src/content/course
     create: true
     format: yaml-frontmatter
     identifier_field: title
+    media_folder: /public/course/images
+    public_folder: /course/images
     fields:
       - { name: title, label: 标题, widget: string }
       - { name: description, label: 描述, widget: text, required: false }
@@ -46,8 +49,8 @@ collections:
         widget: file
         multiple: true
         required: false
-        media_folder: /public/files
-        public_folder: /files
+        media_folder: /public/course/files
+        public_folder: /course/files
       - { name: tags, label: 标签, widget: list, required: false, default: [] }
       - { name: body, label: 正文（可插入图片）, widget: markdown }
 
@@ -58,6 +61,8 @@ collections:
     create: true
     format: yaml-frontmatter
     identifier_field: title
+    media_folder: /public/writing/images
+    public_folder: /writing/images
     fields:
       - { name: title, label: 标题, widget: string }
       - { name: description, label: 摘要, widget: text, required: false }
@@ -76,6 +81,8 @@ collections:
     create: true
     format: yaml-frontmatter
     identifier_field: title
+    media_folder: /public/music/images
+    public_folder: /music/images
     fields:
       - { name: title, label: 标题, widget: string }
       - { name: description, label: 描述, widget: text, required: false }
@@ -86,8 +93,8 @@ collections:
         label: 音频文件（MP3 / WAV）
         widget: file
         required: false
-        media_folder: /public/audio
-        public_folder: /audio
+        media_folder: /public/music/audio
+        public_folder: /music/audio
       - { name: url, label: 外部收听链接, widget: string, required: false }
       - { name: cover, label: 封面图, widget: image, required: false }
       - { name: tags, label: 标签, widget: list, required: false, default: [] }
@@ -103,8 +110,8 @@ collections:
         label: 视频（小文件，可选）
         widget: file
         required: false
-        media_folder: /public/videos
-        public_folder: /videos
+        media_folder: /public/music/videos
+        public_folder: /music/videos
       - { name: draft, label: 草稿（不显示）, widget: boolean, default: false, required: false }
       - { name: body, label: 正文, widget: markdown }
 
