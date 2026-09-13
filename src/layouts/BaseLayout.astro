@@ -44,11 +44,10 @@ const pathname = Astro.url.pathname;
 
     {
       pathname === '/' && (
-        <button
-          type="button"
+        <a
           data-scroll-toggle
-          onclick="window.__scrollToggle && window.__scrollToggle()"
-          class="fixed inset-x-0 bottom-[calc(4.5rem_+_env(safe-area-inset-bottom))] z-50 mx-auto grid h-12 w-12 touch-manipulation place-items-center rounded-full border border-line bg-white/85 text-ink-mute shadow-soft transition-all duration-300 ease-gentle active:scale-95 hover:text-ink sm:bottom-7"
+          href="#recent"
+          class="fixed inset-x-0 bottom-[calc(4.5rem_+_env(safe-area-inset-bottom))] z-50 mx-auto grid h-12 w-12 touch-manipulation place-items-center rounded-full border border-line bg-white/85 text-ink-mute shadow-soft transition-all duration-300 ease-gentle hover:text-ink sm:bottom-7"
           aria-label="向下滚动查看最近内容"
         >
           <svg
@@ -64,7 +63,7 @@ const pathname = Astro.url.pathname;
           >
             <path d="M6 9l6 6 6-6"></path>
           </svg>
-        </button>
+        </a>
       )
     }
 
@@ -114,43 +113,26 @@ const pathname = Astro.url.pathname;
         return getScrollTop() > 40;
       }
 
-      function scrollToSection(id: string) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        try {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } catch {
-          el.scrollIntoView();
-        }
-      }
-
       function updateScrollToggle() {
-        const button = document.querySelector<HTMLElement>(
+        const link = document.querySelector<HTMLAnchorElement>(
           '[data-scroll-toggle]'
         );
-        if (!button) return;
-        const icon = button.querySelector<SVGElement>('[data-scroll-icon]');
+        if (!link) return;
+        const icon = link.querySelector<SVGElement>('[data-scroll-icon]');
         const down = isScrolledDown();
 
-        button.setAttribute(
+        link.setAttribute(
           'aria-label',
           down ? '回到顶部' : '向下滚动查看最近内容'
         );
+        link.setAttribute('href', down ? '#page-top' : '#recent');
         if (icon) icon.style.transform = down ? 'rotate(180deg)' : '';
       }
 
-      function initScrollToggle() {
-        updateScrollToggle();
-      }
-
-      (window as any).__scrollToggle = function () {
-        scrollToSection(isScrolledDown() ? 'page-top' : 'recent');
-      };
-
       window.addEventListener('scroll', updateScrollToggle, { passive: true });
       window.addEventListener('resize', updateScrollToggle);
-      document.addEventListener('astro:page-load', initScrollToggle);
-      initScrollToggle();
+      document.addEventListener('astro:page-load', updateScrollToggle);
+      updateScrollToggle();
     </script>
   </body>
 </html>
