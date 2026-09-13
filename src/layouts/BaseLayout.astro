@@ -42,6 +42,31 @@ const pathname = Astro.url.pathname;
     </main>
     <Footer />
 
+    {
+      pathname === '/' && (
+        <button
+          type="button"
+          data-scroll-toggle
+          class="fixed inset-x-0 bottom-[calc(1.75rem_+_env(safe-area-inset-bottom))] z-50 mx-auto grid h-12 w-12 touch-manipulation place-items-center rounded-full border border-line bg-white/85 text-ink-mute shadow-soft transition-all duration-300 ease-gentle active:scale-95 hover:text-ink"
+          aria-label="向下滚动查看最近内容"
+        >
+          <svg
+            data-scroll-icon
+            class="h-6 w-6 transition-transform duration-300 ease-gentle"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M6 9l6 6 6-6"></path>
+          </svg>
+        </button>
+      )
+    }
+
     <script is:inline>
       function initReveal() {
         var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -72,6 +97,63 @@ const pathname = Astro.url.pathname;
       }
 
       document.addEventListener('astro:page-load', initReveal);
+    </script>
+
+    <script>
+      function getScrollTop() {
+        return (
+          window.scrollY ||
+          document.documentElement.scrollTop ||
+          document.body.scrollTop ||
+          0
+        );
+      }
+
+      function isScrolledDown() {
+        return getScrollTop() > 40;
+      }
+
+      function scrollToSection(id: string) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        try {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } catch {
+          el.scrollIntoView();
+        }
+      }
+
+      function updateScrollToggle() {
+        const button = document.querySelector<HTMLElement>(
+          '[data-scroll-toggle]'
+        );
+        if (!button) return;
+        const icon = button.querySelector<SVGElement>('[data-scroll-icon]');
+        const down = isScrolledDown();
+
+        button.setAttribute(
+          'aria-label',
+          down ? '回到顶部' : '向下滚动查看最近内容'
+        );
+        if (icon) icon.style.transform = down ? 'rotate(180deg)' : '';
+      }
+
+      function initScrollToggle() {
+        const button = document.querySelector<HTMLButtonElement>(
+          '[data-scroll-toggle]'
+        );
+        if (button && button.dataset.ready !== 'true') {
+          button.dataset.ready = 'true';
+          button.addEventListener('click', () => {
+            scrollToSection(isScrolledDown() ? 'page-top' : 'recent');
+          });
+        }
+        updateScrollToggle();
+      }
+
+      document.addEventListener('astro:page-load', initScrollToggle);
+      window.addEventListener('scroll', updateScrollToggle, { passive: true });
+      window.addEventListener('resize', updateScrollToggle);
     </script>
   </body>
 </html>
