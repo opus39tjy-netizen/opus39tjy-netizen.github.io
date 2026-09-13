@@ -35,7 +35,7 @@ collections:
     identifier_field: title
     fields:
       - { name: title, label: 标题, widget: string }
-      - { name: description, label: 摘要, widget: text }
+      - { name: description, label: 摘要, widget: text, required: false }
       - {
           name: date,
           label: 日期,
@@ -59,7 +59,7 @@ collections:
     identifier_field: title
     fields:
       - { name: title, label: 标题, widget: string }
-      - { name: description, label: 摘要, widget: text }
+      - { name: description, label: 摘要, widget: text, required: false }
       - {
           name: date,
           label: 日期,
@@ -97,7 +97,7 @@ collections:
     identifier_field: title
     fields:
       - { name: title, label: 标题, widget: string }
-      - { name: description, label: 描述, widget: text }
+      - { name: description, label: 描述, widget: text, required: false }
       - {
           name: date,
           label: 日期,
@@ -142,7 +142,7 @@ collections:
     identifier_field: title
     fields:
       - { name: title, label: 标题, widget: string }
-      - { name: description, label: 描述, widget: text }
+      - { name: description, label: 描述, widget: text, required: false }
       - {
           name: date,
           label: 日期,

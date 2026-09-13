@@ -6,7 +6,7 @@ const emptyToUndefined = (value: unknown) =>
 
 const baseFields = z.object({
   title: z.string(),
-  description: z.string(),
+  description: z.string().default(''),
   date: z.coerce.date(),
   category: z.string().default('未分类'),
   tags: z.array(z.string()).default([]),
