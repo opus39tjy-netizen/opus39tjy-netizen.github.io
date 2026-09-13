@@ -157,6 +157,18 @@ collections:
       - { name: draft, label: 草稿（不显示）, widget: boolean, default: false }
       - { name: body, label: 正文, widget: markdown }
 
+  - name: comments
+    label: 评论设置
+    files:
+      - name: giscus
+        label: Giscus 评论
+        file: src/data/giscus.json
+        fields:
+          - { name: repo, label: 仓库（owner/repo）, widget: string }
+          - { name: repoId, label: 仓库 ID（repo-id）, widget: string, required: false }
+          - { name: category, label: 分类名称, widget: string, default: Announcements }
+          - { name: categoryId, label: 分类 ID（category-id）, widget: string, required: false }
+
   - name: settings
     label: 站点设置
     files:
@@ -165,8 +177,9 @@ collections:
         file: src/data/site.json
         fields:
           - { name: name, label: 名字 / 标识, widget: string }
+          - { name: heading, label: 首页大标题, widget: string }
           - { name: title, label: 浏览器标题, widget: string }
-          - { name: tagline, label: 首页标语, widget: string }
+          - { name: tagline, label: 首页小字（可留空）, widget: string, required: false }
           - { name: description, label: 网站描述, widget: text }
 
   - name: pages

@@ -1,39 +1,32 @@
 ---
-import { giscus } from '../data/giscus';
+import giscus from '../data/giscus.json';
 
-const configured =
-  !giscus.repoId.startsWith('REPLACE') && !giscus.repo.startsWith('your-name');
+const configured = Boolean(giscus.repoId) && Boolean(giscus.categoryId);
 ---
 
-<section class="reveal mt-20 border-t border-line pt-10">
-  <h2 class="text-[1.2rem] font-medium tracking-[-0.01em]">评论</h2>
-
-  <div
-    class="mt-6"
-    data-giscus
-    data-repo={giscus.repo}
-    data-repo-id={giscus.repoId}
-    data-category={giscus.category}
-    data-category-id={giscus.categoryId}
-    data-mapping={giscus.mapping}
-    data-strict={giscus.strict}
-    data-reactions-enabled={giscus.reactionsEnabled}
-    data-emit-metadata={giscus.emitMetadata}
-    data-input-position={giscus.inputPosition}
-    data-theme={giscus.theme}
-    data-lang={giscus.lang}
-  >
-  </div>
-
-  {
-    !configured && import.meta.env.DEV && (
-      <p class="mt-4 text-[0.85rem] leading-[1.8] text-ink-mute">
-        评论尚未配置：在 <code class="rounded-xs border border-line bg-tint px-1.5 py-0.5">src/data/giscus.ts</code>
-        中填入 GitHub Discussions 信息后即可显示。
-      </p>
-    )
-  }
-</section>
+{
+  configured && (
+    <section class="reveal mt-20 border-t border-line pt-10">
+      <h2 class="text-[1.2rem] font-medium tracking-[-0.01em]">评论</h2>
+      <div
+        class="mt-6"
+        data-giscus
+        data-repo={giscus.repo}
+        data-repo-id={giscus.repoId}
+        data-category={giscus.category}
+        data-category-id={giscus.categoryId}
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="zh-CN"
+      >
+      </div>
+    </section>
+  )
+}
 
 <script>
   function mountGiscus() {

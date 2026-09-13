@@ -14,14 +14,18 @@ const recent = await getRecent(4);
       <h1
         class="reveal text-[clamp(2.75rem,1.6rem_+_8vw,5.75rem)] font-medium leading-[1.02] tracking-[-0.03em]"
       >
-        {site.name}
+        {site.heading}
       </h1>
-      <p
-        class="reveal mt-5 text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute"
-        style="--reveal-delay:120ms"
-      >
-        {site.tagline}
-      </p>
+      {
+        site.tagline && (
+          <p
+            class="reveal mt-5 text-[0.72rem] uppercase tracking-[0.24em] text-ink-mute"
+            style="--reveal-delay:120ms"
+          >
+            {site.tagline}
+          </p>
+        )
+      }
     </div>
 
     <span
