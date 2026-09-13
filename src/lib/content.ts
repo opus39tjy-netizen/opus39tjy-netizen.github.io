@@ -33,6 +33,7 @@ export interface RecentItem {
   title: string;
   description: string;
   category: string;
+  kind: string;
   date: Date;
   href: string;
   cover?: string;
@@ -50,6 +51,7 @@ export async function getRecent(limit = 4): Promise<RecentItem[]> {
       title: entry.data.title,
       description: entry.data.description,
       category: entry.data.category,
+      kind: '文章',
       date: entry.data.date,
       href: `/writing/${entry.id}`,
       cover: entry.data.cover,
@@ -58,6 +60,7 @@ export async function getRecent(limit = 4): Promise<RecentItem[]> {
       title: entry.data.title,
       description: entry.data.description,
       category: entry.data.category,
+      kind: '音乐',
       date: entry.data.date,
       href: `/music/${entry.id}`,
       cover: entry.data.cover,
@@ -66,6 +69,7 @@ export async function getRecent(limit = 4): Promise<RecentItem[]> {
       title: entry.data.title,
       description: entry.data.description,
       category: entry.data.category,
+      kind: '课程',
       date: entry.data.date,
       href: `/course/${entry.id}`,
       cover: entry.data.cover,

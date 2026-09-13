@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import MediaPlaceholder from './MediaPlaceholder.astro';
 import { formatDate } from '../lib/content';
 
 interface Props {
@@ -27,7 +28,7 @@ const { entries } = Astro.props;
                 decoding="async"
               />
             ) : (
-              <div class="media-placeholder h-full w-full" />
+              <MediaPlaceholder label="音乐" />
             )}
             {entry.data.video && (
               <span

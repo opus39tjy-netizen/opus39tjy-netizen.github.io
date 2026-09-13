@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SocialIcon from '../components/SocialIcon.astro';
+import MediaPlaceholder from '../components/MediaPlaceholder.astro';
 import { site } from '../data/site';
 import { getRecent, formatDate } from '../lib/content';
 
@@ -97,7 +98,7 @@ const socials = (site.socials ?? []).map((social) => ({
 
     {
       recent.length > 0 ? (
-        <ul class="grid grid-cols-1 gap-[clamp(1rem,2.5vw,1.5rem)] sm:grid-cols-2">
+        <ul class="grid grid-cols-1 gap-[clamp(0.9rem,2vw,1.25rem)]">
           {recent.map((item, i) => (
             <li class="reveal" style={`--reveal-delay:${i * 70}ms`}>
               <a
@@ -114,12 +115,12 @@ const socials = (site.socials ?? []).map((social) => ({
                       decoding="async"
                     />
                   ) : (
-                    <div class="media-placeholder h-full w-full" />
+                    <MediaPlaceholder label={item.kind} />
                   )}
                 </div>
                 <div class="min-w-0 flex-1 py-1">
                   <div class="text-[0.72rem] uppercase tracking-[0.14em] text-ink-mute">
-                    {item.category} · {formatDate(item.date)}
+                    {item.kind} · {item.category} · {formatDate(item.date)}
                   </div>
                   <h2 class="mt-1.5 line-clamp-2 text-[1.02rem] font-medium leading-[1.4] tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
                     {item.title}

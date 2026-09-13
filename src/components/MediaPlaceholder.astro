@@ -1,0 +1,11 @@
+---
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="media-placeholder grid h-full w-full place-items-center">
+  <span class="text-[0.68rem] tracking-[0.24em] text-ink/70">{label}</span>
+</div>
