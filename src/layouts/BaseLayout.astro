@@ -139,21 +139,21 @@ const pathname = Astro.url.pathname;
       }
 
       function initScrollToggle() {
-        const button = document.querySelector<HTMLButtonElement>(
-          '[data-scroll-toggle]'
-        );
-        if (button && button.dataset.ready !== 'true') {
-          button.dataset.ready = 'true';
-          button.addEventListener('click', () => {
-            scrollToSection(isScrolledDown() ? 'page-top' : 'recent');
-          });
-        }
         updateScrollToggle();
       }
 
-      document.addEventListener('astro:page-load', initScrollToggle);
+      document.addEventListener('click', (event) => {
+        const target = event.target as Element | null;
+        const button = target?.closest('[data-scroll-toggle]');
+        if (!button) return;
+        event.preventDefault();
+        scrollToSection(isScrolledDown() ? 'page-top' : 'recent');
+      });
+
       window.addEventListener('scroll', updateScrollToggle, { passive: true });
       window.addEventListener('resize', updateScrollToggle);
+      document.addEventListener('astro:page-load', initScrollToggle);
+      initScrollToggle();
     </script>
   </body>
 </html>
