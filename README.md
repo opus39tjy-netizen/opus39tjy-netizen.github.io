@@ -7,8 +7,6 @@
 
 ## 内容在哪里
 
-按网站板块整理，顺序与网站一致：
-
 ### 课程
 
 - 课程内容：[`src/content/course`](src/content/course)
@@ -41,9 +39,7 @@
 - 评论设置：[`src/data/giscus.json`](src/data/giscus.json)
 - 内容管理后台配置：[`public/admin/config.yml`](public/admin/config.yml)
 
-## 日常怎么改内容
-
-平时**不用改代码**，直接进后台：
+## 如何修改内容
 
 - 打开 https://opus39tjy-netizen.github.io/admin/
 - 用 GitHub 令牌（Token）登录
