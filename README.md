@@ -7,19 +7,36 @@
 
 ## 内容在哪里
 
-| 内容 | 位置 |
-| --- | --- |
-| 文章 | [`src/content/writing`](src/content/writing) |
-| 课程（含讲义文件） | [`src/content/course`](src/content/course) |
-| 音乐 | [`src/content/music`](src/content/music) |
-| 关于页 | [`src/content/pages/about.md`](src/content/pages/about.md) |
-| 图片（封面、正文插图） | [`public/images`](public/images) |
-| 音频 | [`public/audio`](public/audio) |
-| 小视频 | [`public/videos`](public/videos) |
-| 课程文件（PDF / PPT 等） | [`public/files`](public/files) |
-| 站点设置（名字、标语、社交链接等） | [`src/data/site.json`](src/data/site.json) |
-| 评论设置 | [`src/data/giscus.json`](src/data/giscus.json) |
-| 内容管理后台配置 | [`public/admin/config.yml`](public/admin/config.yml) |
+按网站板块整理，顺序与网站一致：
+
+### 课程
+
+- 课程内容：[`src/content/course`](src/content/course)
+- 讲义文件（PDF / PPT 等）：[`public/files`](public/files)
+
+### 文章
+
+- 文章内容：[`src/content/writing`](src/content/writing)
+
+### 音乐
+
+- 音乐内容：[`src/content/music`](src/content/music)
+- 音频：[`public/audio`](public/audio)
+- 小视频：[`public/videos`](public/videos)
+
+### 关于
+
+- 关于页：[`src/content/pages/about.md`](src/content/pages/about.md)
+
+### 图片素材
+
+- 封面与正文插图（各板块共用）：[`public/images`](public/images)
+
+### 设置
+
+- 站点设置（名字、标语、社交链接等）：[`src/data/site.json`](src/data/site.json)
+- 评论设置：[`src/data/giscus.json`](src/data/giscus.json)
+- 内容管理后台配置：[`public/admin/config.yml`](public/admin/config.yml)
 
 ## 日常怎么改内容
 
