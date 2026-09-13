@@ -1,5 +1,7 @@
 import { getCollection } from 'astro:content';
 
+export const PAGE_SIZE = 10;
+
 type Dated = { data: { date: Date } };
 
 export function formatDate(date: Date): string {

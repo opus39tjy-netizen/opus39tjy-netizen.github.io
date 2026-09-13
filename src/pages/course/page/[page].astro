@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageHead from '../../../components/PageHead.astro';
+import CourseList from '../../../components/CourseList.astro';
+import Pagination from '../../../components/Pagination.astro';
+import { getCourse, PAGE_SIZE } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const entries = await getCourse();
+  const total = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
+  return Array.from({ length: Math.max(0, total - 1) }, (_, i) => ({
+    params: { page: String(i + 2) },
+  }));
+}
+
+const page = Number(Astro.params.page);
+const entries = await getCourse();
+const total = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
+const paged = entries.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+---
+
+<BaseLayout
+  title={`课程 · 第 ${page} 页`}
+  description="来自课堂与自学的结构化笔记，放在这里，方便以后还能找到。"
+>
+  <section
+    class="mx-auto w-full max-w-[66rem] px-[clamp(1.25rem,5vw,3.5rem)] pb-[clamp(4.5rem,11vw,9.5rem)] pt-[clamp(2.5rem,6vw,4rem)]"
+  >
+    <PageHead title="课程" />
+
+    {paged.length > 0 && <CourseList entries={paged} />}
+
+    <Pagination current={page} total={total} base="/course" />
+  </section>
+</BaseLayout>

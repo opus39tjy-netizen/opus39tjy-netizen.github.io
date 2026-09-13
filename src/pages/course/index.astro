@@ -1,9 +1,13 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHead from '../../components/PageHead.astro';
-import { getCourse, formatDate } from '../../lib/content';
+import CourseList from '../../components/CourseList.astro';
+import Pagination from '../../components/Pagination.astro';
+import { getCourse, PAGE_SIZE } from '../../lib/content';
 
-const courses = await getCourse();
+const entries = await getCourse();
+const total = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
+const paged = entries.slice(0, PAGE_SIZE);
 ---
 
 <BaseLayout
@@ -15,42 +19,8 @@ const courses = await getCourse();
   >
     <PageHead title="课程" />
 
-    {
-      courses.length === 0 ? null : (
-        <ul class="grid grid-cols-1 gap-[clamp(1.25rem,3vw,2rem)] sm:grid-cols-2">
-          {courses.map((course, i) => (
-            <li class="reveal" style={`--reveal-delay:${i * 80}ms`}>
-              <a
-                href={`/course/${course.id}`}
-                class="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-white/60 shadow-soft backdrop-blur-md transition-all duration-500 ease-gentle hover:-translate-y-1.5 hover:shadow-glow"
-              >
-                {course.data.cover && (
-                  <div class="overflow-hidden">
-                    <img
-                      src={course.data.cover}
-                      alt={course.data.title}
-                      class="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-[1.03]"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-                <div class="flex flex-1 flex-col p-[clamp(1.1rem,2.4vw,1.5rem)]">
-                  <div class="flex items-center justify-between gap-3 text-[0.72rem] uppercase tracking-[0.16em] text-ink-mute">
-                    <span>{course.data.category}</span>
-                    <span class="tabular-nums">{formatDate(course.data.date)}</span>
-                  </div>
-                  <h2 class="mt-2 text-[1.05rem] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
-                    {course.data.title}
-                  </h2>
-                  <p class="mt-2 text-[0.95rem] leading-[1.75] text-ink-soft">
-                    {course.data.description}
-                  </p>
-                </div>
-              </a>
-            </li>
-          ))}
-        </ul>
-      )
-    }
+    {paged.length > 0 && <CourseList entries={paged} />}
+
+    <Pagination current={1} total={total} base="/course" />
   </section>
 </BaseLayout>

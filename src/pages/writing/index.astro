@@ -1,9 +1,13 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHead from '../../components/PageHead.astro';
-import { getWriting, formatDate } from '../../lib/content';
+import WritingList from '../../components/WritingList.astro';
+import Pagination from '../../components/Pagination.astro';
+import { getWriting, PAGE_SIZE } from '../../lib/content';
 
 const posts = await getWriting();
+const total = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
+const paged = posts.slice(0, PAGE_SIZE);
 ---
 
 <BaseLayout
@@ -15,54 +19,8 @@ const posts = await getWriting();
   >
     <PageHead title="文章" />
 
-    {
-      posts.length === 0 ? null : (
-        <ul class="border-t border-line">
-          {posts.map((post, i) => (
-            <li class="reveal border-b border-line" style={`--reveal-delay:${i * 70}ms`}>
-              <a
-                href={`/writing/${post.id}`}
-                class="group flex items-start gap-4 py-[clamp(1.05rem,3vw,1.6rem)] transition-transform duration-500 ease-gentle hover:translate-x-1.5 sm:gap-5"
-              >
-                <div class="h-16 w-16 shrink-0 overflow-hidden rounded-sm bg-tint sm:h-20 sm:w-20">
-                  {post.data.cover ? (
-                    <img
-                      src={post.data.cover}
-                      alt={post.data.title}
-                      class="h-full w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div class="h-full w-full bg-[linear-gradient(135deg,#c9c2e8,#aec7e0_55%,#b8dde3)]" />
-                  )}
-                </div>
-                <div class="min-w-0 flex-1">
-                  <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <span class="text-[clamp(1rem,0.94rem_+_0.4vw,1.15rem)] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-accent-strong">
-                      {post.data.title}
-                    </span>
-                    <span class="whitespace-nowrap text-[0.85rem] tabular-nums text-ink-mute">
-                      {post.data.category} · {formatDate(post.data.date)}
-                    </span>
-                  </div>
-                  <p class="mt-1 max-w-[42rem] text-[0.95rem] text-ink-soft">
-                    {post.data.description}
-                  </p>
-                  {post.data.tags.length > 0 && (
-                    <span class="mt-2 flex flex-wrap gap-2">
-                      {post.data.tags.map((tag) => (
-                        <span class="rounded-full bg-accent/10 px-3 py-1 text-[0.7rem] uppercase tracking-[0.14em] text-accent-strong">
-                          {tag}
-                        </span>
-                      ))}
-                    </span>
-                  )}
-                </div>
-              </a>
-            </li>
-          ))}
-        </ul>
-      )
-    }
+    {paged.length > 0 && <WritingList posts={paged} />}
+
+    <Pagination current={1} total={total} base="/writing" />
   </section>
 </BaseLayout>
