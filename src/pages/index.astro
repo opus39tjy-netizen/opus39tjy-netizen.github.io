@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SocialIcon from '../components/SocialIcon.astro';
 import { site } from '../data/site';
 import { getRecent, formatDate } from '../lib/content';
 
@@ -62,9 +63,9 @@ const socials = site.socials ?? [];
                   }
                   aria-label={social.label}
                   title={social.label}
-                  class="grid h-11 w-11 place-items-center rounded-full border border-white/50 bg-white/30 text-[0.95rem] font-medium text-ink shadow-soft backdrop-blur-md transition-all duration-300 ease-gentle hover:-translate-y-0.5 hover:bg-white/60"
+                  class="grid h-11 w-11 place-items-center rounded-full border border-white/50 bg-white/30 text-ink shadow-soft backdrop-blur-md transition-all duration-300 ease-gentle hover:-translate-y-0.5 hover:bg-white/60"
                 >
-                  {social.label.trim().charAt(0).toUpperCase()}
+                  <SocialIcon label={social.label} />
                 </a>
               </li>
             ))}
