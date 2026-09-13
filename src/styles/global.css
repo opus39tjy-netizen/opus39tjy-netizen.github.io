@@ -24,6 +24,8 @@ body {
 .prose {
   max-width: var(--measure);
   color: var(--text-soft);
+  font-size: clamp(1.03rem, 0.99rem + 0.25vw, 1.13rem);
+  line-height: 1.9;
 }
 
 .prose > * + * {

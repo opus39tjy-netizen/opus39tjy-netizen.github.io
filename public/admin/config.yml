@@ -66,7 +66,7 @@ collections:
       - { name: tags, label: 标签, widget: list, required: false, default: [] }
       - { name: cover, label: 封面图, widget: image, required: false }
       - { name: url, label: 外部链接, widget: string, required: false }
-      - { name: draft, label: 草稿（不显示）, widget: boolean, default: false }
+      - { name: draft, label: 草稿（不显示）, widget: boolean, default: false, required: false }
       - { name: body, label: 正文, widget: markdown }
 
   - name: music
@@ -105,7 +105,7 @@ collections:
         required: false
         media_folder: /public/videos
         public_folder: /videos
-      - { name: draft, label: 草稿（不显示）, widget: boolean, default: false }
+      - { name: draft, label: 草稿（不显示）, widget: boolean, default: false, required: false }
       - { name: body, label: 正文, widget: markdown }
 
   - name: comments
