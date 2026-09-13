@@ -13,4 +13,4 @@ video: ''
 draft: false
 ---
 
-以后应该就用FL而不是Cakewalk了
+以后应该就用FL而不是Cakewalk了。
