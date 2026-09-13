@@ -24,9 +24,10 @@ const { posts } = Astro.props;
                 alt={post.data.title}
                 class="h-full w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-105"
                 loading="lazy"
+                decoding="async"
               />
             ) : (
-              <div class="h-full w-full bg-[linear-gradient(135deg,#c9c2e8,#aec7e0_55%,#b8dde3)]" />
+              <div class="media-placeholder h-full w-full" />
             )}
           </div>
           <div class="min-w-0 flex-1">

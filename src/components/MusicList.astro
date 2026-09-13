@@ -17,27 +17,31 @@ const { entries } = Astro.props;
           href={`/music/${entry.id}`}
           class="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-white/60 shadow-soft backdrop-blur-md transition-all duration-500 ease-gentle hover:-translate-y-1.5 hover:shadow-glow"
         >
-          {(entry.data.cover || entry.data.video) && (
-            <div class="overflow-hidden">
-              {entry.data.cover ? (
-                <img
-                  src={entry.data.cover}
-                  alt={entry.data.title}
-                  class="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-[1.03]"
-                  loading="lazy"
-                />
-              ) : (
-                <video
-                  src={`${entry.data.video}#t=0.1`}
-                  muted
-                  playsinline
-                  preload="metadata"
-                  class="aspect-[16/9] w-full object-cover"
-                  aria-hidden="true"
-                />
-              )}
-            </div>
-          )}
+          <div class="relative aspect-[16/9] w-full overflow-hidden bg-tint">
+            {entry.data.cover ? (
+              <img
+                src={entry.data.cover}
+                alt={entry.data.title}
+                class="h-full w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-[1.03]"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <div class="media-placeholder h-full w-full" />
+            )}
+            {entry.data.video && (
+              <span
+                class="pointer-events-none absolute inset-0 grid place-items-center"
+                aria-hidden="true"
+              >
+                <span class="grid h-10 w-10 place-items-center rounded-full bg-white/80 text-accent-strong shadow-soft">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5.14v13.72a.5.5 0 0 0 .76.43l11-6.86a.5.5 0 0 0 0-.86l-11-6.86A.5.5 0 0 0 8 5.14Z" />
+                  </svg>
+                </span>
+              </span>
+            )}
+          </div>
           <div class="flex flex-1 flex-col p-[clamp(1.1rem,2.4vw,1.5rem)]">
             <div class="flex items-center justify-between gap-3 text-[0.72rem] uppercase tracking-[0.16em] text-ink-mute">
               <span>{entry.data.category}</span>

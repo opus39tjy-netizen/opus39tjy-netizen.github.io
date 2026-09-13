@@ -20,6 +20,11 @@ body {
   border-radius: 6px;
 }
 
+/* Shared media preview placeholder, used by every card/list */
+.media-placeholder {
+  background-image: linear-gradient(135deg, #c9c2e8, #aec7e0 55%, #b8dde3);
+}
+
 /* ---------- Prose (Markdown body) ---------- */
 .prose {
   max-width: var(--measure);

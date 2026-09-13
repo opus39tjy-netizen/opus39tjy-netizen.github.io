@@ -17,16 +17,19 @@ const { entries } = Astro.props;
           href={`/course/${entry.id}`}
           class="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-white/60 shadow-soft backdrop-blur-md transition-all duration-500 ease-gentle hover:-translate-y-1.5 hover:shadow-glow"
         >
-          {entry.data.cover && (
-            <div class="overflow-hidden">
+          <div class="aspect-[16/9] w-full overflow-hidden bg-tint">
+            {entry.data.cover ? (
               <img
                 src={entry.data.cover}
                 alt={entry.data.title}
-                class="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-[1.03]"
+                class="h-full w-full object-cover transition-transform duration-700 ease-gentle group-hover:scale-[1.03]"
                 loading="lazy"
+                decoding="async"
               />
-            </div>
-          )}
+            ) : (
+              <div class="media-placeholder h-full w-full" />
+            )}
+          </div>
           <div class="flex flex-1 flex-col p-[clamp(1.1rem,2.4vw,1.5rem)]">
             <div class="flex items-center justify-between gap-3 text-[0.72rem] uppercase tracking-[0.16em] text-ink-mute">
               <span>{entry.data.category}</span>
