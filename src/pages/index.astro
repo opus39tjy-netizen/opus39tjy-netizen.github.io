@@ -86,13 +86,15 @@ const socials = (site.socials ?? []).map((social) => ({
       }
     </div>
 
-    <a
-      href="#recent"
-      class="absolute bottom-7 left-1/2 z-20 -translate-x-1/2 text-ink-mute transition-colors duration-300 ease-gentle hover:text-ink"
+    <button
+      type="button"
+      data-scroll-toggle
+      class="fixed inset-x-0 bottom-7 z-30 mx-auto grid h-11 w-11 place-items-center rounded-full border border-line bg-white/60 text-ink-mute shadow-soft backdrop-blur-md transition-colors duration-300 ease-gentle hover:text-ink"
       aria-label="向下滚动查看最近内容"
     >
       <svg
-        class="scroll-arrow h-6 w-6"
+        data-scroll-icon
+        class="h-6 w-6 transition-transform duration-300 ease-gentle"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -103,7 +105,7 @@ const socials = (site.socials ?? []).map((social) => ({
       >
         <path d="M6 9l6 6 6-6"></path>
       </svg>
-    </a>
+    </button>
   </section>
 
   <section
@@ -161,20 +163,41 @@ const socials = (site.socials ?? []).map((social) => ({
   </section>
 </BaseLayout>
 
-<style>
-  .scroll-arrow {
-    animation: scroll-bounce 2.4s var(--ease) infinite;
+<script>
+  function updateScrollToggle() {
+    const button = document.querySelector<HTMLElement>('[data-scroll-toggle]');
+    if (!button) return;
+    const icon = button.querySelector<SVGElement>('[data-scroll-icon]');
+    const threshold = Math.max(120, window.innerHeight * 0.4);
+    const atTop = window.scrollY < threshold;
+
+    button.setAttribute(
+      'aria-label',
+      atTop ? '向下滚动查看最近内容' : '回到顶部'
+    );
+    if (icon) icon.style.transform = atTop ? '' : 'rotate(180deg)';
   }
 
-  @keyframes scroll-bounce {
-    0%,
-    100% {
-      transform: translateY(0);
-      opacity: 0.55;
+  function initScrollToggle() {
+    const button = document.querySelector<HTMLButtonElement>(
+      '[data-scroll-toggle]'
+    );
+    if (button && button.dataset.ready !== 'true') {
+      button.dataset.ready = 'true';
+      button.addEventListener('click', () => {
+        const target = document.querySelector('#recent');
+        const threshold = Math.max(120, window.innerHeight * 0.4);
+        if (window.scrollY < threshold && target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
     }
-    50% {
-      transform: translateY(6px);
-      opacity: 1;
-    }
+    updateScrollToggle();
   }
-</style>
+
+  document.addEventListener('astro:page-load', initScrollToggle);
+  window.addEventListener('scroll', updateScrollToggle, { passive: true });
+  window.addEventListener('resize', updateScrollToggle);
+</script>
